@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>MastersThesisCode</Name>
     <RootNamespace>MastersThesisCode</RootNamespace>
+    <InterpreterId>CondaEnv|CondaEnv|310_env</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,8 +23,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="acquire_stock_data_func.py" />
-    <Compile Include="graph_func.py" />
+    <Compile Include="graph_abnormal.py" />
+    <Compile Include="graph_arima.py" />
+    <Compile Include="graph_rollvol.py" />
     <Compile Include="MastersThesisCode.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="CondaEnv|CondaEnv|310_env" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|313_env" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
