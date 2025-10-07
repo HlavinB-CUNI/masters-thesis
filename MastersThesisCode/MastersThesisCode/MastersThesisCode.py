@@ -25,19 +25,16 @@ def switch(user_request):
     if user_request == 1:
         print('Dataframe of all Oil and Gas Stocks')
 
-        with open(path, 'r', newline='') as tickers:
-            csvreader = csv.reader(tickers)
-            # Read all rows into a list
-            rows = list(csvreader)
-
-        # Print row count
-        print(f"Total no. of rows: {len(rows)}")
+        #with open(path, 'r', newline='') as tickers:
+        #    csvreader = csv.reader(tickers)
+        #    # Read all rows into a list
+        #    rows = list(csvreader)
 
         # Print each row
-        for row in rows:
-            print(row)
+        #for row in rows:
+        #    print(row)
 
-        # acquire_stock_data()
+        acquire_stock_data(path)
 
     elif user_request == 2:
         print('ARIMA Calculations')
