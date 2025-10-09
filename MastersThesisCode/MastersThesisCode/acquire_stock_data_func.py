@@ -27,34 +27,48 @@ def acquire_stock_data(path):
             yahoo_df = yahoo_df.reset_index()
             if yahoo_df.empty == False:
                 stock_data[i] = pl.from_pandas(yahoo_df)
+                stock_data[i] = stock_data[i].rename({f"('Date', '')":f"Date_{i}", f"('Close', '{i}')":f"Close_{i}"})
             else:
                 print(f"Skipping {i}.")
             
         # Converting stock_data to a list
         stock_data = list(stock_data.values())
+        print(stock_data)
 
         # Establishing a new list for specifically adjusted closing returns
         stock_close_data = {}
 
-        # We know that the 12 years of data has 3017 + 2 days, so any stock with less than that amount of rows gets disqualified
+        # We know that the 12 years of data has 3017 + 2 days for data offset, so any stock with less than that amount of rows gets disqualified
         for j in range(len(stock_data)):
             if stock_data[j].select(pl.count()).item() == 3019:
                 # Making sure only the close price is included
                 stock_close_data[j] = stock_data[j].select(pl.selectors.by_index([0,1]))
 
                 # Adding column for transformed log returns
-                stock_close_data[j] = stock_close_data[j].with_columns([(pl.selectors.by_index([1]).log().diff()).alias("log_close_returns")])
+                stock_close_data[j] = stock_close_data[j].with_columns([(pl.selectors.by_index([1]).log().diff()).alias(f"Log_{stock_close_data[j].columns[1]}")])
 
                 # Removing the excess NA row at the beginning
                 stock_close_data[j] = stock_close_data[j].select(pl.all().slice(1))
-
+                
         stock_close_data = list(stock_close_data.values())
-
-        # Adding column for transformed log returns
-
 
         # Printing output to confirm results
         print(stock_close_data)
+
+        # Setting up concat dataframe
+        stock_close_data_concat = {}
+        stock_close_data_concat[0] = pl.DataFrame({})
+
+        #for k in range(len(stock_close_data)):
+        #    stock_close_data_concat[0] = pl.concat([stock_close_data_concat[0], stock_close_data[k]], how = "horizontal")
+
+        # Printing output to confirm results for concatenation
+        stock_close_data_concat = list(stock_close_data_concat)
+        print(stock_close_data_concat)
+
+        # Exporting to .csv
+
+
 
 
 
