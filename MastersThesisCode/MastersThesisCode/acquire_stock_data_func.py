@@ -1,5 +1,4 @@
 import csv
-import numpy as np
 import os
 import polars as pl
 import yfinance as yahoo
@@ -33,7 +32,6 @@ def acquire_stock_data(path):
             
         # Converting stock_data to a list
         stock_data = list(stock_data.values())
-        print(stock_data)
 
         # Establishing a new list for specifically adjusted closing returns
         stock_close_data = {}
@@ -56,17 +54,16 @@ def acquire_stock_data(path):
         print(stock_close_data)
 
         # Setting up concat dataframe
-        stock_close_data_concat = {}
-        stock_close_data_concat[0] = pl.DataFrame({})
+        stock_close_data_concat = stock_close_data[0]
 
-        #for k in range(len(stock_close_data)):
-        #    stock_close_data_concat[0] = pl.concat([stock_close_data_concat[0], stock_close_data[k]], how = "horizontal")
-
-        # Printing output to confirm results for concatenation
-        stock_close_data_concat = list(stock_close_data_concat)
-        print(stock_close_data_concat)
+        # Looping to concatenate everything
+        for k in range(1, len(stock_close_data)):
+            stock_close_data_concat = pl.concat([stock_close_data_concat, stock_close_data[k]], how = "horizontal")
 
         # Exporting to .csv
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        path_concat = os.path.join(script_dir, 'Data', 'stock_data_concat.csv')
+        stock_close_data_concat.write_csv(path_concat)
 
 
 
