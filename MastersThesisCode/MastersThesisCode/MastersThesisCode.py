@@ -19,23 +19,11 @@ user_request = int(input("Enter valid number: "))
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(script_dir, 'Data', 'tickers_only.csv')
-print(path)
 
 def switch(user_request):
     if user_request == 1:
         print('Dataframe of all Oil and Gas Stocks')
-
-        #with open(path, 'r', newline='') as tickers:
-        #    csvreader = csv.reader(tickers)
-        #    # Read all rows into a list
-        #    rows = list(csvreader)
-
-        # Print each row
-        #for row in rows:
-        #    print(row)
-
         acquire_stock_data(path)
-
     elif user_request == 2:
         print('ARIMA Calculations')
 

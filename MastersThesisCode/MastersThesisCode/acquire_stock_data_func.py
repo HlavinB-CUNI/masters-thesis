@@ -20,6 +20,7 @@ def acquire_stock_data(path):
         # Establishing the dataframe for the stock data
         stock_data = {}
 
+        # Loop to input each individual stock into the list
         for i in stocks:
             yahoo_df = yahoo.download(i, start = "2012-07-01", end = "2024-07-01", progress = False, auto_adjust = True)
             yahoo_df = yahoo_df.reset_index()
@@ -28,16 +29,19 @@ def acquire_stock_data(path):
             else:
                 print(f"Skipping {i}.")
             
-        # We know that the 12 years of data has 3017 days, so any stock with less than that amount of rows gets disqualified
-        #for j in stock_data:
         # Converting stock_data to a list
         stock_data = list(stock_data.values())
-        print(stock_data)
-        # Making sure only the close price is included
-        #stock_close_data = {}
-        print(stock_data[1])
-        #for i in range(len(stock_data)):
-        #    stock_close_data[i] = stock_data[i].select(pl.selectors.by_index([0,1]))
+
+        # Establishing a new list for specifically adjusted closing returns
+        stock_close_data = {}
+
+        # We know that the 12 years of data has 3017 days, so any stock with less than that amount of rows gets disqualified
+        for j in range(len(stock_data)):
+            if stock_data[j].select(pl.count()).item() == 3017:
+                # Making sure only the close price is included
+                stock_close_data[j] = stock_data[j].select(pl.selectors.by_index([0,1]))
+
+        print(stock_close_data)
 
         # Gives the total number of valid stocks for the time period
         #print(len(stock_close_data))
