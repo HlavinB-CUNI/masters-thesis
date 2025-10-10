@@ -2,6 +2,7 @@ import csv
 import os
 import polars as pl
 import yfinance as yahoo
+from statsmodels.tsa.stattools import adfuller
 
 # Function for if the user wishes to re-acquire fresh data using the list of stocks
 def acquire_stock_data(path):
@@ -89,14 +90,16 @@ def acquire_stock_data(path):
         for m in valid_stocks:
             stock_close_data_average_log = stock_close_data_average_log.drop(pl.exclude(["Date", "Average"]))
 
-        print("Average log.")
-        print(stock_close_data_average_log)
-
         # Exporting mean of all stocks per day as a .csv.
         path_average = os.path.join(script_dir, 'Data', 'stock_data_average.csv')
         stock_close_data_concat_log.write_csv(path_average)
 
+        return stock_close_data_average_log
 
 
+# Checks the stationarity of a particular set of stock averages
+def check_stationarity(stocks):
+    adf = adfuller(stocks["Average"])
+    print(f"P-value: {adf[1]}")
 
-
+    # Reject the null definitely. 

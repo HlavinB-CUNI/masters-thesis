@@ -9,7 +9,7 @@ import matplotlib as mpl
 import os
 import csv
 
-from acquire_stock_data_func import acquire_stock_data
+from acquire_stock_data_func import acquire_stock_data, check_stationarity
 
 # Asking the user what they specifically want to see or calculate
 print('Please select a number for what you would like to see.')
@@ -24,6 +24,8 @@ def switch(user_request):
     if user_request == 1:
         print('Dataframe of all Oil and Gas Stocks')
         stocks = acquire_stock_data(path)
+        check_stationarity(stocks)
+
     elif user_request == 2:
         print('ARIMA Calculations')
 
