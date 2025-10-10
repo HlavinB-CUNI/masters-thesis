@@ -3,6 +3,7 @@ import os
 import polars as pl
 import yfinance as yahoo
 
+# Function for if the user wishes to re-acquire fresh data using the list of stocks
 def acquire_stock_data(path):
 
     with open(path, 'r', newline='', encoding = 'utf-8-sig') as tickers:
@@ -16,6 +17,9 @@ def acquire_stock_data(path):
         rows_polar = rows_polar.transpose(include_header=False, column_names=['oil_stocks'])
         stocks = rows_polar['oil_stocks'].to_list()
 
+        # Making a list of the valid stocks
+        valid_stocks = list()
+
         # Establishing the dataframe for the stock data
         stock_data = {}
 
@@ -27,6 +31,8 @@ def acquire_stock_data(path):
             if yahoo_df.empty == False:
                 stock_data[i] = pl.from_pandas(yahoo_df)
                 stock_data[i] = stock_data[i].rename({f"('Date', '')":f"Date_{i}", f"('Close', '{i}')":f"Close_{i}"})
+
+                valid_stocks.append(i)
             else:
                 print(f"Skipping {i}.")
             
@@ -51,19 +57,44 @@ def acquire_stock_data(path):
         stock_close_data = list(stock_close_data.values())
 
         # Printing output to confirm results
-        print(stock_close_data)
+        #print(stock_close_data)
 
-        # Setting up concat dataframe
+        # Setting up concat dataframes
         stock_close_data_concat = stock_close_data[0]
+        stock_close_data_concat_log = stock_close_data[0]
 
         # Looping to concatenate everything
         for k in range(1, len(stock_close_data)):
-            stock_close_data_concat = pl.concat([stock_close_data_concat, stock_close_data[k]], how = "horizontal")
+            stock_close_data_concat = pl.concat([stock_close_data_concat, stock_close_data[k].select(pl.selectors.by_index([1,2]))], how = "horizontal") 
 
-        # Exporting to .csv
+        for l in range(1, len(stock_close_data)):
+            stock_close_data_concat_log = pl.concat([stock_close_data_concat_log, stock_close_data[l].select(pl.selectors.by_index([2]))], how = "horizontal") # only log returns at index 2
+
+        # Fixing columns in the concat log dataframe 
+        stock_close_data_concat_log = stock_close_data_concat_log.drop(f"Close_{valid_stocks[0]}")
+
+        # Renaming first column to just 'Date' instead of 'Date_' + first stock ticker
+        stock_close_data_concat = stock_close_data_concat.rename({f"Date_{valid_stocks[0]}":f"Date"})
+        stock_close_data_concat_log = stock_close_data_concat_log.rename({f"Date_{valid_stocks[0]}":f"Date"})
+
+        # Exporting all stocks uniquely to .csv
         script_dir = os.path.dirname(os.path.abspath(__file__))
         path_concat = os.path.join(script_dir, 'Data', 'stock_data_concat.csv')
         stock_close_data_concat.write_csv(path_concat)
+
+        # Setting up averaging dataframe
+        stock_close_data_average_log = stock_close_data_concat_log.with_columns(pl.mean_horizontal(pl.exclude("Date")).alias("Average"))
+        
+        # Loop to remove every other column except the average one
+        for m in valid_stocks:
+            stock_close_data_average_log = stock_close_data_average_log.drop(pl.exclude(["Date", "Average"]))
+
+        print("Average log.")
+        print(stock_close_data_average_log)
+
+        # Exporting mean of all stocks per day as a .csv.
+        path_average = os.path.join(script_dir, 'Data', 'stock_data_average.csv')
+        stock_close_data_concat_log.write_csv(path_average)
 
 
 

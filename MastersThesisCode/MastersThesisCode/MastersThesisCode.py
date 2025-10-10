@@ -23,7 +23,7 @@ path = os.path.join(script_dir, 'Data', 'tickers_only.csv')
 def switch(user_request):
     if user_request == 1:
         print('Dataframe of all Oil and Gas Stocks')
-        acquire_stock_data(path)
+        stocks = acquire_stock_data(path)
     elif user_request == 2:
         print('ARIMA Calculations')
 
