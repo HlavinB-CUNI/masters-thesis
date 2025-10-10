@@ -22,6 +22,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="acquire_oil_data_func.py" />
+    <Compile Include="acquire_sp500_data_func.py" />
     <Compile Include="acquire_stock_data_func.py" />
     <Compile Include="graph_abnormal.py" />
     <Compile Include="graph_arima.py" />

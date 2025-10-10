@@ -3,24 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\acquire_stock_data_func.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\MastersThesisCode.py||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\MastersThesisCode.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_abnormal.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\graph_abnormal.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_rollvol.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\graph_rollvol.py||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_arima.py||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\graph_arima.py||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{76F0A590-770A-4963-B284-79843B840CC1}|MastersThesisCode\\MastersThesisCode.pyproj|solutionrelative:MastersThesisCode\\acquire_stock_data_func.py||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,8 +18,36 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MastersThesisCode.py",
+              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\MastersThesisCode.py",
+              "RelativeDocumentMoniker": "MastersThesisCode\\MastersThesisCode.py",
+              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\MastersThesisCode.py",
+              "RelativeToolTip": "MastersThesisCode\\MastersThesisCode.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
+              "WhenOpened": "2025-10-10T22:11:44.04Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "acquire_stock_data_func.py",
+              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py",
+              "RelativeDocumentMoniker": "MastersThesisCode\\acquire_stock_data_func.py",
+              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py",
+              "RelativeToolTip": "MastersThesisCode\\acquire_stock_data_func.py",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGgAAAAiAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
+              "WhenOpened": "2025-10-04T11:32:00.044Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -39,68 +55,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MastersThesisCode.py",
-              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\MastersThesisCode.py",
-              "RelativeDocumentMoniker": "MastersThesisCode\\MastersThesisCode.py",
-              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\MastersThesisCode.py",
-              "RelativeToolTip": "MastersThesisCode\\MastersThesisCode.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
-              "WhenOpened": "2025-10-04T11:23:40.944Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "acquire_stock_data_func.py",
-              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py",
-              "RelativeDocumentMoniker": "MastersThesisCode\\acquire_stock_data_func.py",
-              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\acquire_stock_data_func.py",
-              "RelativeToolTip": "MastersThesisCode\\acquire_stock_data_func.py",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGYAAAAfAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
-              "WhenOpened": "2025-10-04T11:32:00.044Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "graph_rollvol.py",
-              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_rollvol.py",
-              "RelativeDocumentMoniker": "MastersThesisCode\\graph_rollvol.py",
-              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_rollvol.py",
-              "RelativeToolTip": "MastersThesisCode\\graph_rollvol.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
-              "WhenOpened": "2025-10-06T19:13:51.429Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "graph_abnormal.py",
-              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_abnormal.py",
-              "RelativeDocumentMoniker": "MastersThesisCode\\graph_abnormal.py",
-              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_abnormal.py",
-              "RelativeToolTip": "MastersThesisCode\\graph_abnormal.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
-              "WhenOpened": "2025-10-06T19:13:27.447Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "graph_arima.py",
-              "DocumentMoniker": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_arima.py",
-              "RelativeDocumentMoniker": "MastersThesisCode\\graph_arima.py",
-              "ToolTip": "C:\\Users\\Bryan\\Desktop\\Bryan Life\\College\\Charles University\\Master\u0027s Thesis\\masters-thesis\\masters-thesis\\MastersThesisCode\\MastersThesisCode\\graph_arima.py",
-              "RelativeToolTip": "MastersThesisCode\\graph_arima.py",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHeSURBVDhPpVMxa1NRFP7ebZLSlgaltNpSVCySRUxL0NAh4FJpHWpxcZAUBEPG/AKHDsVBN5eGrCnoYKCDoDiUCKKBjtZBUZtJ2ojYJr40ue\u002B\u002B47k3VzD0hQr94OOed8853/k47z2cCETk2NAgk8mQDQMhhFjK5/Mb9vEotIDruoEsFovEzVvZbPaWLTcQ9uxCpVLp4l\u002Bk0\u002BlEPB5/wIPm7RVC9uxCMpm0UTdKpRKi0WiCQy3wUt8FCvw7VSNxbRapG4voDwucGgyjXC7bzH84ePt1HysbH/GhWoNstzA1OoSFhZuxQqFg8sfu4FutAd\u002BT8KSEYm7v7GJ0YnLClgYLaAcjU9N4Vx9Dda8OBz7OjwywSNsIXY39vEL7TxWpxv2eO3hWHUZ19xc8ti25UdvXzdpNWH0BDj8JiLOrPXfweOu9mRgRhOXUEPr7IiBfYeacB9HaBNRvQH4f6\u002BlgMERwGxJP7grEoq9shj9Uz\u002BVGpmIi4vXcwdzlcePgzLAuZPiSGw869Jg\u002Biw1Mvw50oLGcuoh71y8h1HwB1Js8UfFLnwScNnBhdYVLWsy1IwK5XM5GHaw9uu0LeSCMddZA32lz7zjOQxMcByK1SPU3O/Rjnai2fkjNz8/5L77TyQJ/AJc67LNf3QeWAAAAAElFTkSuQmCC",
-              "WhenOpened": "2025-10-04T11:32:15.755Z"
             }
           ]
         }
