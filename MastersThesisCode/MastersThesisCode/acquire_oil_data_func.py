@@ -48,5 +48,5 @@ def check_stationarity_oil(oil):
         print("Log values ARE stationary")
         return True
     else:
-        print("Log values are NOT stationary.")
+        print("Return values are NOT stationary.")
         return False
