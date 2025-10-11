@@ -1,14 +1,12 @@
-import csv
 import os
-import polars as pl
 
 def file_existence_check(path):
     print(f"Checking if the .csv exists at the following path: {path}", "\n")
     try:   
         os.remove(path)
-        print("File found, replacing with new file...", "\n")
+        print("File found, replacing with new file...")
     except OSError:
-        print("File does not exist. Generating new one...", "\n")
+        print("File does not exist. Generating new one...")
         pass
 
 def export_values_to_csv(filename, dataframe):
