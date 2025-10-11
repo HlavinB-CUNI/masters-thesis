@@ -42,7 +42,6 @@ def acquire_stock_data(path):
             
         # Converting stock_data to a list
         stock_data = list(stock_data.values())
-        print(stock_data)
 
         # Establishing a new list for specifically adjusted closing returns
         stock_close_data = {}
@@ -59,6 +58,7 @@ def acquire_stock_data(path):
                 # Removing the excess NA row at the beginning
                 stock_close_data[j] = stock_close_data[j].select(pl.all().slice(1))
                 
+        
         stock_close_data = list(stock_close_data.values())
 
         # OPTIONAL - print output to confirm results
@@ -84,6 +84,10 @@ def acquire_stock_data(path):
         # Setting up averaging dataframe
         stock_close_data_average_diff = stock_close_data_concat_diff.with_columns(pl.mean_horizontal(pl.exclude("Date")).alias("Average"))
         stock_close_data_average_diff = stock_close_data_average_diff.drop(pl.exclude(["Date", "Average"]))
+
+        # Fixing the Date column by removing the time from each dataframe
+        stock_close_data_concat_diff = stock_close_data_concat_diff.with_columns(stock_close_data_concat_diff["Date"].dt.date().alias("Date"))
+        stock_close_data_average_diff = stock_close_data_average_diff.with_columns(stock_close_data_average_diff["Date"].dt.date().alias("Date"))
 
         # Seeing if the concat  and average files exist first, and deletes the existing one
         file_existence_check(f"{script_dir}\Data\stock_data_concat.csv")

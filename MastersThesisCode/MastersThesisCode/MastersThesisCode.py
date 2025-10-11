@@ -40,7 +40,7 @@ def switch(user_request):
 
     elif user_request == 4:
         print('Generalized Graphing Operations')
-
+        # Options for volatility or stock graphing in general
 
     elif user_request == 5:
         print('ARIMA Calculations')

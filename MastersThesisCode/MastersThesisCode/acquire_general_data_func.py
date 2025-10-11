@@ -25,8 +25,7 @@ def acquire_general_data(stock_ticker):
         
     stock_data = stock_data.with_columns([(pl.selectors.by_index([1]).diff()).alias(f"Diff_{stock_ticker}")])
     stock_data = stock_data.select(pl.all().slice(1))
-    
-    print(stock_data)
+    stock_data = stock_data.with_columns(stock_data[f"Date_{stock_ticker}"].dt.date().alias(f"Date_{stock_ticker}"))
 
     # If the stock contains an invalid character, have it replaced with a different one
     invalids = ["=", "&", "%", "#", "@"]
