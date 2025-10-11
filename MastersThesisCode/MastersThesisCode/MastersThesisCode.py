@@ -2,10 +2,7 @@
 # Topic: Do Russian Aggressions Significnatly Impact US Oil Stocks?
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
-import pandas as pd
-import numpy as np
 import polars as pl
-import matplotlib as mpl
 import os
 import csv
 
@@ -22,31 +19,40 @@ path = os.path.join(script_dir, 'Data', 'tickers_only.csv')
 
 def switch(user_request):
     if user_request == 1:
-        print('Dataframe of all Oil and Gas Stocks')
+        print('Dataframe Generation of all Oil and Gas Stocks')
         stocks = acquire_stock_data(path)
-        check_stationarity(stocks)
+        is_stationary = check_stationarity(stocks)
 
+    
     elif user_request == 2:
-        print('ARIMA Calculations')
+        print('Dataframe Generation of Crude Oil Price')
 
 
-    elif user_request == 3: 
-        print('Abnormal Returns Calculations')
+    elif user_request == 3:
+        print('Dataframe Generation of SP500 Price')
 
 
     elif user_request == 4:
-        print('Rolling Volatility Calculations')
+        print('ARIMA Calculations')
 
 
-    elif user_request == 5:
-        print('Graphing of ARIMA')
+    elif user_request == 5: 
+        print('Abnormal Returns Calculations')
 
 
     elif user_request == 6:
-        print('Graphing of Abnormal Stock Returns')
+        print('Rolling Volatility Calculations')
 
 
     elif user_request == 7:
+        print('Graphing of ARIMA')
+
+
+    elif user_request == 8:
+        print('Graphing of Abnormal Stock Returns')
+
+
+    elif user_request == 9:
         print('Graphing of Rolling Volatility')
 
 

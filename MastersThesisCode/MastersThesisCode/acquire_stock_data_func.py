@@ -3,6 +3,7 @@ import os
 import polars as pl
 import yfinance as yahoo
 from statsmodels.tsa.stattools import adfuller
+from file_operations import file_existence_check, export_values_to_csv
 
 # Function for if the user wishes to re-acquire fresh data using the list of stocks
 def acquire_stock_data(path):
@@ -21,6 +22,9 @@ def acquire_stock_data(path):
         # Making a list of the valid stocks
         valid_stocks = list()
 
+        # Establishing the directory path for all files for this project
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
         # Establishing the dataframe for the stock data
         stock_data = {}
 
@@ -32,7 +36,6 @@ def acquire_stock_data(path):
             if yahoo_df.empty == False:
                 stock_data[i] = pl.from_pandas(yahoo_df)
                 stock_data[i] = stock_data[i].rename({f"('Date', '')":f"Date_{i}", f"('Close', '{i}')":f"Close_{i}"})
-
                 valid_stocks.append(i)
             else:
                 print(f"Skipping {i}.")
@@ -57,7 +60,7 @@ def acquire_stock_data(path):
                 
         stock_close_data = list(stock_close_data.values())
 
-        # Printing output to confirm results
+        # OPTIONAL - print output to confirm results
         #print(stock_close_data)
 
         # Setting up concat dataframes
@@ -67,7 +70,6 @@ def acquire_stock_data(path):
         # Looping to concatenate everything
         for k in range(1, len(stock_close_data)):
             stock_close_data_concat = pl.concat([stock_close_data_concat, stock_close_data[k].select(pl.selectors.by_index([1,2]))], how = "horizontal") 
-
         for l in range(1, len(stock_close_data)):
             stock_close_data_concat_log = pl.concat([stock_close_data_concat_log, stock_close_data[l].select(pl.selectors.by_index([2]))], how = "horizontal") # only log returns at index 2
 
@@ -78,28 +80,30 @@ def acquire_stock_data(path):
         stock_close_data_concat = stock_close_data_concat.rename({f"Date_{valid_stocks[0]}":f"Date"})
         stock_close_data_concat_log = stock_close_data_concat_log.rename({f"Date_{valid_stocks[0]}":f"Date"})
 
-        # Exporting all stocks uniquely to .csv
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        path_concat = os.path.join(script_dir, 'Data', 'stock_data_concat.csv')
-        stock_close_data_concat.write_csv(path_concat)
-
         # Setting up averaging dataframe
         stock_close_data_average_log = stock_close_data_concat_log.with_columns(pl.mean_horizontal(pl.exclude("Date")).alias("Average"))
-        
-        # Loop to remove every other column except the average one
-        for m in valid_stocks:
-            stock_close_data_average_log = stock_close_data_average_log.drop(pl.exclude(["Date", "Average"]))
+        stock_close_data_average_log = stock_close_data_average_log.drop(pl.exclude(["Date", "Average"]))
 
-        # Exporting mean of all stocks per day as a .csv.
-        path_average = os.path.join(script_dir, 'Data', 'stock_data_average.csv')
-        stock_close_data_concat_log.write_csv(path_average)
+        # Seeing if the concat  and average files exist first, and deletes the existing one
+        file_existence_check(f"{script_dir}\Data\stock_data_concat.csv")
+        file_existence_check(f"{script_dir}\Data\stock_data_average.csv") 
 
+        # Exporting the new .csv files
+        export_values_to_csv('stock_data_concat.csv', stock_close_data_concat_log)
+        export_values_to_csv('stock_data_average.csv', stock_close_data_average_log)
+
+        # Returning the average of the stocks, which is the only one used in any calculations anyway
         return stock_close_data_average_log
-
 
 # Checks the stationarity of a particular set of stock averages
 def check_stationarity(stocks):
     adf = adfuller(stocks["Average"])
     print(f"P-value: {adf[1]}")
 
-    # Reject the null definitely. 
+    # Confirming stationarity or non stationarity
+    if adf[1] < 0.5:
+        print("Log values ARE stationary")
+        return True
+    else:
+        print("Log values are NOT stationary.")
+        return False
