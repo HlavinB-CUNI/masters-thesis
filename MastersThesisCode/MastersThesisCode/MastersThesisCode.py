@@ -3,18 +3,24 @@
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
 import os
-
+from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
-
-# Asking the user what they specifically want to see or calculate
-print('Please select a number for what you would like to see.')
-
-user_request = int(input("Enter valid number: "))
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(script_dir, 'Data', 'tickers_only.csv')
+
+# Loading in dataframes for the files necessary to do this analysis (if they exist)
+stocks = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'stock_data_average.csv'))
+oil = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'CL_F_returns_data.csv')) 
+SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv')) 
+print("-------------------------------------------------")
+
+# Asking the user what they specifically want to see or calculate
+print('Please select a number for what action you would like to perform.')
+
+user_request = int(input("Enter valid number: "))
 
 def switch(user_request):
     if user_request == 1:
