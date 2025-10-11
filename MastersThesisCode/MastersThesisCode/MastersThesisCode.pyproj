@@ -26,10 +26,7 @@
     <Compile Include="acquire_sp500_data_func.py" />
     <Compile Include="acquire_stock_data_func.py" />
     <Compile Include="file_operations.py" />
-    <Compile Include="graph_abnormal.py" />
-    <Compile Include="graph_arima.py" />
     <Compile Include="graph_operations.py" />
-    <Compile Include="graph_rollvol.py" />
     <Compile Include="MastersThesisCode.py" />
   </ItemGroup>
   <ItemGroup>

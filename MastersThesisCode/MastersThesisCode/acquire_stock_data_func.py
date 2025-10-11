@@ -96,7 +96,7 @@ def acquire_stock_data(path):
         return stock_close_data_average_log
 
 # Checks the stationarity of a particular set of stock averages
-def check_stationarity(stocks):
+def check_stationarity_stocks(stocks):
     adf = adfuller(stocks["Average"])
     print(f"P-value: {adf[1]}")
 

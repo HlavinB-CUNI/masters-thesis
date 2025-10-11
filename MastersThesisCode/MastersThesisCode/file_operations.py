@@ -1,8 +1,6 @@
 import csv
 import os
 import polars as pl
-import yfinance as yahoo
-from statsmodels.tsa.stattools import adfuller
 
 def file_existence_check(path):
     print(f"Checking if the .csv exists at the following path: {path}", "\n")
