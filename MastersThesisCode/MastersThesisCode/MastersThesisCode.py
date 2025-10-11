@@ -3,6 +3,7 @@
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
 import os
+from graph_operations import plot_prices, plot_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
@@ -22,7 +23,7 @@ print('Please select a number for what action you would like to perform.')
 
 user_request = int(input("Enter valid number: "))
 
-def switch(user_request):
+def switch(user_request, stocks, oil, SP500):
     if user_request == 1:
         print('Dataframe Generation of all Oil and Gas Stocks')
         stocks = acquire_stock_data(path)
@@ -40,7 +41,10 @@ def switch(user_request):
 
     elif user_request == 4:
         print('Generalized Graphing Operations')
-        # Options for volatility or stock graphing in general
+        # Options for stock graph and returns graph
+        # ask the user what they want to see
+        plot_prices(oil)
+        plot_returns(oil)
 
     elif user_request == 5:
         print('ARIMA Calculations')
@@ -71,7 +75,9 @@ def switch(user_request):
         user_request = input("Enter valid number: ")
         user_request = int(user_request)
 
-switch(user_request)
+    return stocks, oil, SP500
+
+switch(user_request, stocks, oil, SP500)
 
 # Option 1: Collection of all Oil and Gas Stocks which are part of this paper
 
