@@ -43,8 +43,12 @@ def switch(user_request, stocks, oil, SP500):
         print('Generalized Graphing Operations')
         # Options for stock graph and returns graph
         # ask the user what they want to see
-        plot_prices(oil)
-        plot_returns(oil)
+        #plot_prices(oil)
+        #plot_returns(oil)
+        #plot_prices(SP500)
+        #plot_returns(SP500)
+        #plot_prices(stocks)
+        #plot_returns(stocks)
 
     elif user_request == 5:
         print('ARIMA Calculations')
