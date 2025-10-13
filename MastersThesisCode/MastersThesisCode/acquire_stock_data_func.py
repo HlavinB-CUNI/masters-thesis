@@ -106,7 +106,7 @@ def check_stationarity_stocks(stocks):
     print(f"P-value: {adf[1]}")
 
     # Confirming stationarity or non stationarity
-    if adf[1] < 0.5:
+    if adf[1] < 0.05:
         print("Return values ARE stationary")
         return True
     else:

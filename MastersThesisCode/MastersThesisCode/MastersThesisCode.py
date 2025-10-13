@@ -20,7 +20,6 @@ print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
 print('Please select a number for what action you would like to perform.')
-
 user_request = int(input("Enter valid number: "))
 
 def switch(user_request, stocks, oil, SP500):
@@ -41,14 +40,20 @@ def switch(user_request, stocks, oil, SP500):
 
     elif user_request == 4:
         print('Generalized Graphing Operations')
+        
         # Options for stock graph and returns graph
-        # ask the user what they want to see
-        #plot_prices(oil)
-        #plot_returns(oil)
-        #plot_prices(SP500)
-        #plot_returns(SP500)
-        #plot_prices(stocks)
-        #plot_returns(stocks)
+        print('Please select a number for what action you would like to perform.')
+        print("1.) Oil 2.) SP500, 3.) Avg. US Oil Stocks")
+        user_request_plots = int(input("Enter valid number: "))
+        if user_request_plots == 1:
+            plot_prices(oil)
+            plot_returns(oil)
+        elif user_request_plots == 2:
+            plot_prices(SP500)
+            plot_returns(SP500)
+        elif user_request_plots == 3:
+            plot_prices(stocks)
+            plot_returns(stocks)
 
     elif user_request == 5:
         print('ARIMA Calculations')
