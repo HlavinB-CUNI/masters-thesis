@@ -87,17 +87,3 @@ def switch(user_request, stocks, oil, SP500):
     return stocks, oil, SP500
 
 switch(user_request, stocks, oil, SP500)
-
-# Option 1: Collection of all Oil and Gas Stocks which are part of this paper
-
-# Option 2: Calculations for ARIMA
-
-# Option 3: Calculations for Abnormal Returns
-
-# Option 4: Rolling Volitility Calculations
-
-# Option 5: Graphing of ARIMA 
-
-# Option 6: Graphing of Abnormal Stock Returns
-
-# Option 7: Graphing of Rolling Volatility
