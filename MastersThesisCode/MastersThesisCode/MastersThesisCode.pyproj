@@ -22,8 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="abnormal_returns_calculations.py" />
     <Compile Include="acquire_general_data_func.py" />
     <Compile Include="acquire_stock_data_func.py" />
+    <Compile Include="arima_operations.py" />
     <Compile Include="file_operations.py" />
     <Compile Include="graph_operations.py" />
     <Compile Include="MastersThesisCode.py" />

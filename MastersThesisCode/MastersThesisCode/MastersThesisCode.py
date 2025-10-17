@@ -7,6 +7,7 @@ from graph_operations import plot_prices, plot_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
+from abnormal_returns_calculations import abnormal_returns_calc
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -17,6 +18,10 @@ stocks = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'stock_data_av
 oil = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'CL_F_returns_data.csv')) 
 SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv'))
 dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_variables.csv'))
+significant_dates = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_events.csv'))
+print(significant_dates)
+print(stocks)
+print(SP500)
 print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
@@ -57,12 +62,14 @@ def switch(user_request, stocks, oil, SP500):
             plot_returns(stocks)
 
     elif user_request == 5:
-        print('ARIMA Calculations')
+        print('Abnormal Returns Calculations')
+        # SP500 is the benchmark
+        # 11 day horizon (5 before, 1 on, 5 after)
+        abnormal_returns_calc(stocks, SP500, significant_dates)
 
 
     elif user_request == 6: 
-        print('Abnormal Returns Calculations')
-
+        print('ARMA-GARCH Calculations')
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
