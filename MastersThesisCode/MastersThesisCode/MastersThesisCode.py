@@ -15,7 +15,8 @@ path = os.path.join(script_dir, 'Data', 'tickers_only.csv')
 # Loading in dataframes for the files necessary to do this analysis (if they exist)
 stocks = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'stock_data_average.csv'))
 oil = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'CL_F_returns_data.csv')) 
-SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv')) 
+SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv'))
+dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_variables.csv'))
 print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
