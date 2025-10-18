@@ -53,7 +53,7 @@ def acquire_stock_data(path):
                 stock_close_data[j] = stock_data[j].select(pl.selectors.by_index([0,1]))
 
                 # Adding column for transformed diff returns
-                stock_close_data[j] = stock_close_data[j].with_columns([(pl.selectors.by_index([1]).diff()).alias(f"Diff_{stock_close_data[j].columns[1]}")])
+                stock_close_data[j] = stock_close_data[j].with_columns([(pl.col(stock_close_data[j].columns[1]) / pl.col(stock_close_data[j].columns[1]).shift(1) - 1).alias(f"Diff_{stock_close_data[j].columns[1]}")])
 
                 # Removing the excess NA row at the beginning
                 stock_close_data[j] = stock_close_data[j].select(pl.all().slice(1))

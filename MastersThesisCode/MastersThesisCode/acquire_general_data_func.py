@@ -13,7 +13,7 @@ def acquire_general_data(stock_ticker):
     # Establishing the dataframe for the stock data
     stock_data = {}
     
-    # Acquire Crude Oil Price, July 1st, 2012 was a Sunday, so the first return will be on July 2nd, and July 1, 2024 was a Monday, so it will be included
+    # Acquire Crude Oil/S&P500 Price, July 1st, 2012 was a Sunday, so the first return will be on July 2nd, and July 1, 2024 was a Monday, so it will be included
     yahoo_df = yahoo.download(stock_ticker, start = "2012-06-29", end = "2024-07-02", progress = False, auto_adjust = True)
     yahoo_df = yahoo_df.reset_index()
     if yahoo_df.empty == False:
@@ -23,7 +23,8 @@ def acquire_general_data(stock_ticker):
     else:
         print(f"No Price Data Found.")
         
-    stock_data = stock_data.with_columns([(pl.selectors.by_index([1]).diff()).alias(f"Diff_{stock_ticker}")])
+
+    stock_data = stock_data.with_columns([(pl.col(stock_data.columns[1]) / pl.col(stock_data.columns[1]).shift(1) - 1).alias(f"Diff_{stock_ticker}")])
     stock_data = stock_data.select(pl.all().slice(1))
     stock_data = stock_data.with_columns(stock_data[f"Date_{stock_ticker}"].dt.date().alias(f"Date_{stock_ticker}"))
 
