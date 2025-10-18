@@ -34,19 +34,20 @@ def plot_returns(dataframe):
                          dataframe.iloc[2392, 0], dataframe.iloc[2643, 0], dataframe.iloc[2893, 0]], rotation=60)
     plt.show()
 
-
 def plot_abnormal_returns(dataframe):
     dataframe = dataframe.to_pandas()
 
     for i in range(0,len(dataframe.columns),3):
         plt.plot(dataframe.iloc[:,i], dataframe.iloc[:, i + 1], color = "green")
-        plt.suptitle(f"Plot of Date vs. Abnormal Returns for {dataframe.iloc[5,i]} and +/- 5 Days")
+        plt.suptitle(f"Plot of Date vs. Abnormal Returns for {dataframe.iloc[5, i]} and +/- 5 Days")
         plt.title(f"Event Classification: {dataframe.iloc[5,i + 2]}")
+
         plt.xlabel("Date")
+        plt.xticks(rotation = 60)
         plt.ylabel("Abnormal Returns")
 
-        # draw perferated line at 0 horizontal
-
-        # plot all of them on the same output
+        plt.grid(color='k', linestyle='-', linewidth=1, alpha = 0.15)
+        plt.axhline(0, color='k', linewidth = 1, alpha = 1)
+        plt.axvline(dataframe.iloc[5, i], color='goldenrod', linewidth = 1, alpha = 1)
 
         plt.show()
