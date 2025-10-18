@@ -19,9 +19,6 @@ oil = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'CL_F_returns_dat
 SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv'))
 dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_variables.csv'))
 significant_dates = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_events.csv'))
-print(significant_dates)
-print(stocks)
-print(SP500)
 print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
