@@ -10,13 +10,10 @@ def abnormal_returns_calc(stocks, SP500, dates):
     # OLS Market Model Establishment
     df_stocks_sp500 = pl.concat([stocks, SP500], how = "horizontal")
     df_stocks_sp500 = df_stocks_sp500.drop(['Date_^SPX', 'Close_^SPX'])
-    print(df_stocks_sp500)
 
     stocks_ols = (df_stocks_sp500.select(
     pl.col("_Mean-Oil-Stocks").least_squares.ols(pl.col("Diff_^SPX"), mode="statistics", add_intercept=True))
     .unnest("statistics").explode(["feature_names", "coefficients", "standard_errors", "t_values", "p_values"]))
-
-    print(stocks_ols)
 
     # Establishing dataframe for sums
     #df_sum_abnormal_returns = pl.DataFrame()
@@ -70,16 +67,15 @@ def abnormal_returns_calc(stocks, SP500, dates):
                 temp_rets = pl.DataFrame(temp_rets)
                 abnormal_returns.append(temp_rets)   
 
+    # Combinging all dataframes together into one giant one to make things simple
     abnormal_returns_complete = pl.concat(abnormal_returns, how = "horizontal")
-    print(abnormal_returns_complete)
 
-        # Standardize the returns (might remove this later)
+    # Sum of all abnormal returns calculations (calculations sum for a specific date in one dataframe)
+    cumulative_abnormal_returns_complete = abnormal_returns_complete.sum()
 
-        # (average abnormal returns can be skipped, because the stock returns are already averaged)
-        # Make a list of polars dataframes to store each set of calculations for every date
-
-        # Sum of all abnormal returns calculations (calculations sum for a specific date in one dataframe)
-
+    for k in range(len(dates)):
+            cumulative_abnormal_returns_complete = cumulative_abnormal_returns_complete.drop([f'Date_{k}', f'Event_Type_{k}'])
     # Return dataframe of  & dataframe of sum of abnormal returns calculations
 
+    return abnormal_returns_complete, cumulative_abnormal_returns_complete
 #def formal_standard_dev(stocks_dataframe):

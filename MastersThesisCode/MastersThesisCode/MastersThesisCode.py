@@ -3,7 +3,8 @@
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
 import os
-from graph_operations import plot_prices, plot_returns
+import string
+from graph_operations import plot_prices, plot_returns, plot_abnormal_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
@@ -62,8 +63,16 @@ def switch(user_request, stocks, oil, SP500):
         print('Abnormal Returns Calculations')
         # SP500 is the benchmark
         # 11 day horizon (5 before, 1 on, 5 after)
-        abnormal_returns_calc(stocks, SP500, significant_dates)
+        ab_rets, cum_ab_rets = abnormal_returns_calc(stocks, SP500, significant_dates)
 
+        # Options for stock graph and returns graph
+        print('Would you like to graph the average returns? (y/n)')
+        user_request_plots = input(f"Enter answer: ")
+        print(ab_rets)
+        if user_request_plots.lower() == "yes" or user_request_plots.lower() == "y":
+            plot_abnormal_returns(ab_rets)
+        elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
+            pass
 
     elif user_request == 6: 
         print('ARMA-GARCH Calculations')
