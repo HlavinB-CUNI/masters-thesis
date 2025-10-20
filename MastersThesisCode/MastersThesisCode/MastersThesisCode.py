@@ -68,7 +68,6 @@ def switch(user_request, stocks, oil, SP500):
         # Options for stock graph and returns graph
         print('Would you like to graph the average returns? (y/n)')
         user_request_plots = input(f"Enter answer: ")
-        print(ab_rets)
         if user_request_plots.lower() == "yes" or user_request_plots.lower() == "y":
             plot_abnormal_returns(ab_rets)
         elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
@@ -76,6 +75,8 @@ def switch(user_request, stocks, oil, SP500):
 
     elif user_request == 6: 
         print('ARMA-GARCH Calculations')
+
+
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
@@ -85,11 +86,8 @@ def switch(user_request, stocks, oil, SP500):
         print('Graphing of ARIMA')
 
 
+
     elif user_request == 9:
-        print('Graphing of Abnormal Stock Returns')
-
-
-    elif user_request == 10:
         print('Graphing of Rolling Volatility')
 
 

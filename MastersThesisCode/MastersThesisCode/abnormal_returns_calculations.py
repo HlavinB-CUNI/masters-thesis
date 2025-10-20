@@ -15,8 +15,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
     pl.col("_Mean-Oil-Stocks").least_squares.ols(pl.col("Diff_^SPX"), mode="statistics", add_intercept=True))
     .unnest("statistics").explode(["feature_names", "coefficients", "standard_errors", "t_values", "p_values"]))
 
-    # Establishing dataframe for sums
-    #df_sum_abnormal_returns = pl.DataFrame()
+    print(stocks_ols)
 
     # Loop to find each specific date string in the larger dataframes
     for i in range(len(stocks)):
@@ -78,4 +77,3 @@ def abnormal_returns_calc(stocks, SP500, dates):
     # Return dataframe of  & dataframe of sum of abnormal returns calculations
 
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
-#def formal_standard_dev(stocks_dataframe):
