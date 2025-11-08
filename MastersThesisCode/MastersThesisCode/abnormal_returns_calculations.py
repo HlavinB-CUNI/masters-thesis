@@ -1,5 +1,7 @@
 ﻿import polars as pl
 import polars_ols as pols
+import os
+from file_operations import file_existence_check, export_values_to_csv
 
 # Calculates the abnormal returns values and standardizes them for an 11 day period (5 before, 1 on, 5 after)
 def abnormal_returns_calc(stocks, SP500, dates):
@@ -14,8 +16,6 @@ def abnormal_returns_calc(stocks, SP500, dates):
     stocks_ols = (df_stocks_sp500.select(
     pl.col("_Mean-Oil-Stocks").least_squares.ols(pl.col("Diff_^SPX"), mode="statistics", add_intercept=True))
     .unnest("statistics").explode(["feature_names", "coefficients", "standard_errors", "t_values", "p_values"]))
-
-    print(stocks_ols)
 
     # Loop to find each specific date string in the larger dataframes
     for i in range(len(stocks)):
@@ -64,7 +64,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
 
                 # Converting to polars dataframe and moving into the abnormal_returns list
                 temp_rets = pl.DataFrame(temp_rets)
-                abnormal_returns.append(temp_rets)   
+                abnormal_returns.append(temp_rets) 
 
     # Combinging all dataframes together into one giant one to make things simple
     abnormal_returns_complete = pl.concat(abnormal_returns, how = "horizontal")
@@ -74,6 +74,21 @@ def abnormal_returns_calc(stocks, SP500, dates):
 
     for k in range(len(dates)):
             cumulative_abnormal_returns_complete = cumulative_abnormal_returns_complete.drop([f'Date_{k}', f'Event_Type_{k}'])
-    # Return dataframe of  & dataframe of sum of abnormal returns calculations
+    # Return dataframe of  & dataframe of sum of abnormal returns calculations)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    file_existence_check(f"{script_dir}\Data\abnormal_rets_complete.csv")
+    file_existence_check(f"{script_dir}\Data\cumu_abnormal_rets_complete.csv") 
+
+    # Exporting the new .csv files
+    export_values_to_csv('abnormal_rets_complete.csv', abnormal_returns_complete)
+    export_values_to_csv('cumu_abnormal_rets_complete.csv', cumulative_abnormal_returns_complete)
 
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
+
+
+def generalized_sign_test():
+    
+    
+    return

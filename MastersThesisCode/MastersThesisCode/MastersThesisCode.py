@@ -8,7 +8,7 @@ from graph_operations import plot_prices, plot_returns, plot_abnormal_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
-from abnormal_returns_calculations import abnormal_returns_calc
+from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,6 +20,8 @@ oil = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'CL_F_returns_dat
 SP500 = file_to_dataframe_check(os.path.join(script_dir, 'Data', '^SPX_returns_data.csv'))
 dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_variables.csv'))
 significant_dates = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_events.csv'))
+abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'abnormal_rets_complete.csv'))
+cumulative_abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'cumu_abnormal_rets_complete.csv'))
 print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
@@ -73,21 +75,28 @@ def switch(user_request, stocks, oil, SP500):
         elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
             pass
 
-    elif user_request == 6: 
-        print('ARMA-GARCH Calculations')
 
+    elif user_request == 6: 
+        print('Cumulative Abnormal Returns test for Significance')
+
+        # generalized sign test
+        generalized_sign_test()
 
 
     elif user_request == 7:
-        print('Rolling Volatility Calculations')
+        print('ARMA-GARCH Calculations')
 
 
     elif user_request == 8:
-        print('Graphing of ARIMA')
+        print('Rolling Volatility Calculations')
 
 
 
     elif user_request == 9:
+        print('Graphing of ARIMA')
+
+
+    elif user_request == 10:
         print('Graphing of Rolling Volatility')
 
 
