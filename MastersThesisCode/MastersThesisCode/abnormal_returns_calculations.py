@@ -96,6 +96,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
 def generalized_sign_test(ab_rets, stocks):
     w = 0
     N = 11
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
     w_variables = []
     z_values = []
@@ -136,10 +137,14 @@ def generalized_sign_test(ab_rets, stocks):
     p_values_df = pl.DataFrame(p_values).rename({"column_0":"p_value"})
     significant_status_df = pl.DataFrame(significant_status).rename({"column_0":"Test_For_Significance"})
 
+    # Combining into own dataframe
     z_values_df = pl.concat([date_event_df, w_variables_df, z_values_df, p_values_df, significant_status_df, type_event_df], how = "horizontal")
 
     # Output to file
+    file_existence_check(f"{script_dir}\Data\z_values_df.csv")
 
+    # Exporting the new .csv files
+    export_values_to_csv('z_values_df.csv', z_values_df)
     
     print(z_values_df)
 
