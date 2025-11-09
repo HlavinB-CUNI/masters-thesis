@@ -75,28 +75,27 @@ def switch(user_request, stocks, oil, SP500):
         elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
             pass
 
+        print('Would you like to perform a Generalized Sign test for significance? (y/n)')
+        user_request_plots = input(f"Enter answer: ")
+        if user_request_plots.lower() == "yes" or user_request_plots.lower() == "y":
+            generalized_sign_test(ab_rets, cum_ab_rets)
+        elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
+            pass
 
-    elif user_request == 6: 
-        print('Cumulative Abnormal Returns test for Significance')
-
-        # generalized sign test
-        generalized_sign_test()
-
-
-    elif user_request == 7:
+    elif user_request == 6:
         print('ARMA-GARCH Calculations')
 
 
-    elif user_request == 8:
+    elif user_request == 7:
         print('Rolling Volatility Calculations')
 
 
 
-    elif user_request == 9:
+    elif user_request == 8:
         print('Graphing of ARIMA')
 
 
-    elif user_request == 10:
+    elif user_request == 9:
         print('Graphing of Rolling Volatility')
 
 

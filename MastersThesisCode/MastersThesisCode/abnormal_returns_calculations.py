@@ -1,6 +1,7 @@
 ﻿import polars as pl
 import polars_ols as pols
 import os
+import math
 from file_operations import file_existence_check, export_values_to_csv
 
 # Calculates the abnormal returns values and standardizes them for an 11 day period (5 before, 1 on, 5 after)
@@ -85,10 +86,40 @@ def abnormal_returns_calc(stocks, SP500, dates):
     export_values_to_csv('abnormal_rets_complete.csv', abnormal_returns_complete)
     export_values_to_csv('cumu_abnormal_rets_complete.csv', cumulative_abnormal_returns_complete)
 
+    print(abnormal_returns_complete)
+    print(cumulative_abnormal_returns_complete)
+
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
 
 
-def generalized_sign_test():
+def generalized_sign_test(ab_rets, cum_ab_rets):
+    w = 0
+    N = 11
+
+    w_variables = []
+    pos_pct = []
+    z_values = []
+
+    for l in range(ab_rets.width):
+        w = 0
+        if l in [1,4,7,10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55,58,61]:
+            for m in range(ab_rets.height):
+                if ab_rets[m,l] >= 0:
+                    w = w + 1
+            print(f"Ending loop with {w}")
+            w_variables.append(w)
+
+    for n in range(len(w_variables)):
+        pos_pct.append(w_variables[n] / N)
     
+    for o in range(len(w_variables)):
+        z_values.append((w_variables[o] - N*0.5) / math.sqrt(N*pos_pct[o]*(1-pos_pct[o])))
+
+    print(w_variables)
+    print(pos_pct)
+
+    z_values_df = pl.DataFrame(z_values)
+    print(z_values_df)
+
     
     return
