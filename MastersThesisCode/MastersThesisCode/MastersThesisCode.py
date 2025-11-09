@@ -78,7 +78,7 @@ def switch(user_request, stocks, oil, SP500):
         print('Would you like to perform a Generalized Sign test for significance? (y/n)')
         user_request_plots = input(f"Enter answer: ")
         if user_request_plots.lower() == "yes" or user_request_plots.lower() == "y":
-            generalized_sign_test(ab_rets, cum_ab_rets)
+            generalized_sign_test(ab_rets, stocks)
         elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
             pass
 

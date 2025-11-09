@@ -2,6 +2,7 @@
 import polars_ols as pols
 import os
 import math
+import scipy.stats as st
 from file_operations import file_existence_check, export_values_to_csv
 
 # Calculates the abnormal returns values and standardizes them for an 11 day period (5 before, 1 on, 5 after)
@@ -92,34 +93,54 @@ def abnormal_returns_calc(stocks, SP500, dates):
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
 
 
-def generalized_sign_test(ab_rets, cum_ab_rets):
+def generalized_sign_test(ab_rets, stocks):
     w = 0
     N = 11
 
     w_variables = []
-    pos_pct = []
     z_values = []
+    date_event = []
+    type_event = []
+    p_values = []
+    significant_status = []
 
+    # calculating the quantity of positive returns in each set of abnormal returns
     for l in range(ab_rets.width):
         w = 0
         if l in [1,4,7,10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55,58,61]:
             for m in range(ab_rets.height):
                 if ab_rets[m,l] >= 0:
                     w = w + 1
-            print(f"Ending loop with {w}")
             w_variables.append(w)
+            date_event.append(ab_rets[5,l-1]) # getting the position of the event date 
+            type_event.append(ab_rets[0,l+1]) # getting the position of the event name
 
+    # will be calculated as percentage of positives throughout every observation window combined (this is r_hat)
+    pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
+
+    # adding all the percentage and z-value calculations
     for n in range(len(w_variables)):
-        pos_pct.append(w_variables[n] / N)
+        z_values.append((w_variables[n] - (N*pos_pct)) / math.sqrt(N*pos_pct*(1-pos_pct)))
+
+        # test for significance with the p-value
+        p_values.append(2*st.norm.sf(abs(z_values[n])))
+        if (p_values[n] > 0.05): # reminder that this alpha level can be changed only internally
+            significant_status.append('NOT SIGNIFICANT')
+        else:
+            significant_status.append('SIGNIFICANT')
+
+    date_event_df = pl.DataFrame(date_event).rename({"column_0":"Date"})
+    type_event_df = pl.DataFrame(type_event).rename({"column_0":"Event_Type"})
+    w_variables_df = pl.DataFrame(w_variables).rename({"column_0":"w"})
+    z_values_df = pl.DataFrame(z_values).rename({"column_0":"z_value"})
+    p_values_df = pl.DataFrame(p_values).rename({"column_0":"p_value"})
+    significant_status_df = pl.DataFrame(significant_status).rename({"column_0":"Test_For_Significance"})
+
+    z_values_df = pl.concat([date_event_df, w_variables_df, z_values_df, p_values_df, significant_status_df, type_event_df], how = "horizontal")
+
+    # Output to file
+
     
-    for o in range(len(w_variables)):
-        z_values.append((w_variables[o] - N*0.5) / math.sqrt(N*pos_pct[o]*(1-pos_pct[o])))
-
-    print(w_variables)
-    print(pos_pct)
-
-    z_values_df = pl.DataFrame(z_values)
     print(z_values_df)
 
-    
     return
