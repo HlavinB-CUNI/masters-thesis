@@ -28,7 +28,7 @@ print("-------------------------------------------------")
 print('Please select a number for what action you would like to perform.')
 user_request = int(input("Enter valid number: "))
 
-def switch(user_request, stocks, oil, SP500):
+def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets):
     if user_request == 1:
         print('Dataframe Generation of all Oil and Gas Stocks')
         stocks = acquire_stock_data(path)
@@ -65,7 +65,12 @@ def switch(user_request, stocks, oil, SP500):
         print('Abnormal Returns Calculations')
         # SP500 is the benchmark
         # 11 day horizon (5 before, 1 on, 5 after)
-        ab_rets, cum_ab_rets = abnormal_returns_calc(stocks, SP500, significant_dates)
+        print('Would you like to calculate the abnormal returns, and export to files? (y/n)')
+        user_request_retscalcs = input(f"Enter answer: ")
+        if user_request_retscalcs.lower() == "yes" or user_request_retscalcs.lower() == "y":
+            ab_rets, cum_ab_rets = abnormal_returns_calc(stocks, SP500, significant_dates)
+        elif user_request_retscalcs.lower() == "no" or user_request_retscalcs.lower() == "n":
+            pass
 
         # Options for stock graph and returns graph
         print('Would you like to graph the average returns? (y/n)')
@@ -75,16 +80,18 @@ def switch(user_request, stocks, oil, SP500):
         elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
             pass
 
+        # Generalized sign test for significance
         print('Would you like to perform a Generalized Sign test for significance? (y/n)')
-        user_request_plots = input(f"Enter answer: ")
-        if user_request_plots.lower() == "yes" or user_request_plots.lower() == "y":
+        user_request_tests = input(f"Enter answer: ")
+        if user_request_tests.lower() == "yes" or user_request_tests.lower() == "y":
             generalized_sign_test(ab_rets, stocks)
-        elif user_request_plots.lower() == "no" or user_request_plots.lower() == "n":
+        elif user_request_tests.lower() == "no" or user_request_tests.lower() == "n":
             pass
 
     elif user_request == 6:
         print('ARMA-GARCH Calculations')
-
+        print(dummy_vars)
+        print(sig_dates)
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
@@ -104,6 +111,6 @@ def switch(user_request, stocks, oil, SP500):
         user_request = input("Enter valid number: ")
         user_request = int(user_request)
 
-    return stocks, oil, SP500
+    return stocks, oil, SP500, ab_rets, cum_ab_rets
 
-switch(user_request, stocks, oil, SP500)
+switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete)
