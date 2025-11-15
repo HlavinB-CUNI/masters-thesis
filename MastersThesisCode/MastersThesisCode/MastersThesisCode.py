@@ -9,6 +9,7 @@ from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
 from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test
+from arima_operations import arma_fit, plot_acf_pacf
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -90,8 +91,19 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
 
     elif user_request == 6:
         print('ARMA-GARCH Calculations')
-        print(dummy_vars)
-        print(sig_dates)
+
+        # fitting all the values 
+        plot_acf_pacf(stocks, 'Averaged Stocks')
+        plot_acf_pacf(SP500, 'S&P 500')
+        plot_acf_pacf(oil, 'Oil Futures')
+
+        # fitting the ARMA models individually for each of the returns sets
+        arma_fit(stocks, 'Averaged Stocks')
+        arma_fit(SP500, 'S&P 500')
+        arma_fit(oil, 'Oil Futures')
+
+        #print(dummy_vars)
+        #print(sig_dates)
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
