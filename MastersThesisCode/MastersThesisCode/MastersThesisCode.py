@@ -10,6 +10,7 @@ from acquire_stock_data_func import acquire_stock_data, check_stationarity_stock
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
 from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test
 from arima_operations import arma_fit, plot_acf_pacf, garch_test
+from volatility_calculations import compute_rolling_volatility
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -23,13 +24,14 @@ dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dumm
 significant_dates = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_events.csv'))
 abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'abnormal_rets_complete.csv'))
 cumulative_abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'cumu_abnormal_rets_complete.csv'))
+all_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rescaled_dataframe_all_vars.csv'))
 print("-------------------------------------------------")
 
 # Asking the user what they specifically want to see or calculate
 print('Please select a number for what action you would like to perform.')
 user_request = int(input("Enter valid number: "))
 
-def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets):
+def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, all_variables):
     if user_request == 1:
         print('Dataframe Generation of all Oil and Gas Stocks')
         stocks = acquire_stock_data(path)
@@ -116,7 +118,8 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
     elif user_request == 7:
         print('Rolling Volatility Calculations')
 
-
+        # Calculating the rolling volatility under a month window time frame for the averaged oil stock returns
+        compute_rolling_volatility(stocks, 22)
 
     elif user_request == 8:
         print('Graphing of ARIMA')
@@ -133,4 +136,4 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
 
     return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables
 
-switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete)
+switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, all_variables)

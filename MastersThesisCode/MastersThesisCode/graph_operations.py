@@ -51,3 +51,24 @@ def plot_abnormal_returns(dataframe):
         plt.axvline(dataframe.iloc[5, i], color='goldenrod', linewidth = 1, alpha = 1)
 
         plt.show()
+
+def plot_rolling_volatility(dataframe):
+        
+        plt.plot(dataframe['_Date'], dataframe['_RollingVol'], color = "blue")
+        plt.title("Plot of Date vs. Volatility for Averaged Oil Stocks")
+
+        plt.xlabel("Date")
+        plt.ylabel("Volatility")
+        plt.xticks([125, 377, 629, 881, 1133, 1384, 1635, 1887, 2140, 2392, 2643, 2893], 
+                        [dataframe.iloc[126, 0], dataframe.iloc[377, 0], dataframe.iloc[629, 0], 
+                         dataframe.iloc[881, 0], dataframe.iloc[1133, 0], dataframe.iloc[1384, 0], 
+                         dataframe.iloc[1635, 0], dataframe.iloc[1887, 0], dataframe.iloc[2140, 0], 
+                         dataframe.iloc[2392, 0], dataframe.iloc[2643, 0], dataframe.iloc[2893, 0]], rotation=60)
+
+        plt.axhline(0.02, color='k', linewidth = 1, alpha = .15)
+        plt.axhline(0.04, color='k', linewidth = 1, alpha = .15)
+        plt.axhline(0.06, color='k', linewidth = 1, alpha = .15)
+        plt.axhline(0.08, color='k', linewidth = 1, alpha = .15)
+        plt.axhline(0.10, color='k', linewidth = 1, alpha = .15)
+
+        plt.show()
