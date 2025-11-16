@@ -1,12 +1,16 @@
 import numpy as np
 import pandas as pd
+import polars as pl
 from statsforecast.core import _StatsForecast
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsforecast import StatsForecast
 from statsforecast.models import AutoARIMA
 from statsforecast.arima import arima_string
+import statsmodels.api as sm_api
 from matplotlib import pyplot
 from arch import arch_model
+from file_operations import file_existence_check, export_values_to_csv
+import os
 
 
 def plot_acf_pacf(stocks, string_name):
@@ -47,24 +51,79 @@ def arma_fit(returns_chosen, string_name):
         df['unique_id'] = 'oil_stock' # will need to change this
         df['ds'] = pd.to_datetime(df['ds'])
 
+    # White Noise ARMA(0,0) test and Ljung-Box test just to confirm autocorrelation exists
+    arma_white_noise = sm_api.tsa.arima.ARIMA(df["y"], order = (0,0,0)).fit()
+
+    ljung_box_initial5 = sm_api.stats.acorr_ljungbox(arma_white_noise.resid, lags=[5], return_df=True)
+    ljung_box_initial10 = sm_api.stats.acorr_ljungbox(arma_white_noise.resid, lags=[10], return_df=True)
+    ljung_box_initial15 = sm_api.stats.acorr_ljungbox(arma_white_noise.resid, lags=[15], return_df=True)
+    ljung_box_initial20 = sm_api.stats.acorr_ljungbox(arma_white_noise.resid, lags=[20], return_df=True)
+    print(ljung_box_initial5)
+    print(ljung_box_initial10)
+    print(ljung_box_initial15)
+    print(ljung_box_initial20)
 
     # Printing out the ARIMA values selected with AutoArima
     print(f"Showing: {string_name}")
     sf = StatsForecast(
-    models=[AutoARIMA(seasonal = False, max_p = 5, max_q = 5, stepwise = False, approximation=False)],
-    freq='D',)
+    models=[AutoARIMA(seasonal = False, max_p = 5, max_q = 5, stepwise = False, approximation=False)],freq='D')
     sf.fit(df)
     print(" ")
     print("Auto ARIMA calculation: ")
 
+    # Getting and printing the AR, I, and MA terms to be used
     final_fit = sf.fitted_[0,0].model_
-    print(arima_string(sf.fitted_[0,0].model_))
 
     # Return the end results - averaged stocks = ARMA(0,0), SP500 = ARMA(2,2), and oil = ARMA(2,3)
     return final_fit['arma']
 
-def gjr_garch_test(stocks, oil, SP500, dummy_vars):
+#def arimax_fit(all_variables, stocks_fit):
+#
+#    # we label this as 'df' for simplicity
+#    df = all_variables
+#    df = all_variables.to_pandas()
+#
+#    # Specify the ARMA model with exogeneous variables
+#    model = sm_api.tsa.arima.ARIMA(
+#        df['_Mean-Oil-Stocks'],
+#        exog = df[['Russia', 'DOE', 'OPEC', 'CoVID', 'Oil_Crash', 'Diff_^SPX', 'Diff_CL=F']],
+#        order = (stocks_fit[0], 0, stocks_fit[1])).fit()
+#    print("MODEL SUMMARY ARIMAX")
+#    print(model.summary())
+#
+#    return model 
 
+def garch_test(combined_df, ar_value, ma_value):
+
+    # NOTE - RESCALING WAS NEEDED FOR THE DEPENDENT VARIABLE SO THE NEW COLUMN IS "return*100", done for other returns as well!
+
+    # Re-scaling with new columns
+    combined_df = combined_df.with_columns(pl.col('_Mean-Oil-Stocks').mul(100).alias('_Mean-Oil-Stocks*100'))
+    combined_df = combined_df.with_columns(pl.col('Diff_^SPX').mul(100).alias('Diff_^SPX*100'))
+    combined_df = combined_df.with_columns(pl.col('Diff_CL=F').mul(100).alias('Diff_CL=F*100'))
+
+    model = arch_model(
+        combined_df['_Mean-Oil-Stocks*100'], # select the oil stock averaged returns
+        vol='GARCH',    
+        x=combined_df[['Russia', 'DOE', 'OPEC', 'CoVID', 'Oil_Crash', 'Diff_^SPX*100', 'Diff_CL=F*100']],
+        lags = ar_value, # Lags obtained from auto arima fitting
+        p=1,             
+        o=1,             # GJR-GARCH specification
+        q=1,           
+        dist='t',        # Student's t for fat tails
+        mean='ARX')      # Autoregressive model
     
+    # fitting the model
+    res = model.fit(update_freq=10, disp='off')
+    print(res.summary())
+
+    # Establishing the directory path for all files for this project
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Exporting the new scaled data to .csv 
+    file_existence_check(f"{script_dir}\Data\rescaled_dataframe_all_vars.csv")
+    export_values_to_csv('rescaled_dataframe_all_vars.csv', combined_df)
+
+    # Things that need to be re-scaled back to normal = mean coefficients, varience forecasts/omega 
     
-    return 
+    return combined_df

@@ -9,7 +9,7 @@ from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
 from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test
-from arima_operations import arma_fit, plot_acf_pacf
+from arima_operations import arma_fit, plot_acf_pacf, garch_test
 
 # Get absolute path of *this* script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -92,29 +92,26 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
     elif user_request == 6:
         print('ARMA-GARCH Calculations')
 
-        # fitting all the values 
-        plot_acf_pacf(stocks, 'Averaged Stocks')
-        #plot_acf_pacf(SP500, 'S&P 500')
-        #plot_acf_pacf(oil, 'Oil Futures')
-
-        # fitting the ARMA models individually for each of the returns sets
-        stocks_fit = arma_fit(stocks, 'Averaged Stocks')
-
-        # might not even need these two things
-        #SP500_fit = arma_fit(SP500, 'S&P 500')
-        #oil_fit = arma_fit(oil, 'Oil Futures')
-
         # Combining every variable into one dataframe for simplicity
         all_variables = dummy_vars
         all_variables = all_variables.with_columns(stocks[:,1])
         all_variables = all_variables.with_columns(SP500[:,2])
         all_variables = all_variables.with_columns(oil[:,2])
 
-        # 
+        # fitting all the values 
+        plot_acf_pacf(stocks, 'Averaged Stocks')
 
+        # Fitting the ARMA models individually for each of the returns sets, choosing ARIMA order
+        stocks_fit = arma_fit(stocks, 'Averaged Stocks')
 
-        print(all_variables)
-        #print(sig_dates)
+        # ADF tests done already, and stationarity has been confirmed
+
+        # Moving onto including the exogenous variables (this problably isn't needed)
+        # arimax_stocks_fit = arimax_fit(all_variables, stocks_fit)
+
+        # Actually doing the ARMA-GJR-GARCH modeling, passing in the entire dataframe, and averaged stocks ARMA values
+        print(f'Performing GJR-GARCH Test with the stocks fitted to ARMA({stocks_fit[0]},{stocks_fit[1]}).')
+        extended_dataframe = garch_test(all_variables, stocks_fit[0], stocks_fit[1]) # return variable is a modified dataframe of all the variables, with columns with returns*100
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
@@ -134,6 +131,6 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         user_request = input("Enter valid number: ")
         user_request = int(user_request)
 
-    return stocks, oil, SP500, ab_rets, cum_ab_rets
+    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables
 
 switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete)
