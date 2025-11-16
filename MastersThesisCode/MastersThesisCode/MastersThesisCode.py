@@ -3,7 +3,7 @@
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
 import os
-import string
+import polars as pl
 from graph_operations import plot_prices, plot_returns, plot_abnormal_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
@@ -37,12 +37,12 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
     
     elif user_request == 2:
         print('Dataframe Generation of Crude Oil Price')
-        oil = acquire_general_data("CL=F")
+        oil = acquire_general_data("CL=F", stocks)
         check_stationarity_general(oil, "CL=F")
 
     elif user_request == 3:
         print('Dataframe Generation of SP500 Price')
-        SP500 = acquire_general_data("^SPX")
+        SP500 = acquire_general_data("^SPX", stocks)
         check_stationarity_general(SP500, "^SPX")
 
     elif user_request == 4:
@@ -94,15 +94,26 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
 
         # fitting all the values 
         plot_acf_pacf(stocks, 'Averaged Stocks')
-        plot_acf_pacf(SP500, 'S&P 500')
-        plot_acf_pacf(oil, 'Oil Futures')
+        #plot_acf_pacf(SP500, 'S&P 500')
+        #plot_acf_pacf(oil, 'Oil Futures')
 
         # fitting the ARMA models individually for each of the returns sets
-        arma_fit(stocks, 'Averaged Stocks')
-        arma_fit(SP500, 'S&P 500')
-        arma_fit(oil, 'Oil Futures')
+        stocks_fit = arma_fit(stocks, 'Averaged Stocks')
 
-        #print(dummy_vars)
+        # might not even need these two things
+        #SP500_fit = arma_fit(SP500, 'S&P 500')
+        #oil_fit = arma_fit(oil, 'Oil Futures')
+
+        # Combining every variable into one dataframe for simplicity
+        all_variables = dummy_vars
+        all_variables = all_variables.with_columns(stocks[:,1])
+        all_variables = all_variables.with_columns(SP500[:,2])
+        all_variables = all_variables.with_columns(oil[:,2])
+
+        # 
+
+
+        print(all_variables)
         #print(sig_dates)
 
     elif user_request == 7:

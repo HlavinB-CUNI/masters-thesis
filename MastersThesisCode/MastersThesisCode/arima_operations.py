@@ -1,21 +1,12 @@
-import csv
 import numpy as np
-import os
-import polars as pl
 import pandas as pd
 from statsforecast.core import _StatsForecast
-import yfinance as yahoo
-import statsmodels.api as sm_api
-from statsmodels.tsa.stattools import adfuller
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-from statsmodels.tsa.arima.model import ARIMA
 from statsforecast import StatsForecast
 from statsforecast.models import AutoARIMA
 from statsforecast.arima import arima_string
 from matplotlib import pyplot
-from file_operations import file_existence_check, export_values_to_csv
-from pmdarima.arima import auto_arima
-
+from arch import arch_model
 
 
 def plot_acf_pacf(stocks, string_name):
@@ -65,11 +56,12 @@ def arma_fit(returns_chosen, string_name):
     sf.fit(df)
     print(" ")
     print("Auto ARIMA calculation: ")
+
+    final_fit = sf.fitted_[0,0].model_
     print(arima_string(sf.fitted_[0,0].model_))
 
     # Return the end results - averaged stocks = ARMA(0,0), SP500 = ARMA(2,2), and oil = ARMA(2,3)
-
-    return
+    return final_fit['arma']
 
 def gjr_garch_test(stocks, oil, SP500, dummy_vars):
 
