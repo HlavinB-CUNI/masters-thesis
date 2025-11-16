@@ -122,11 +122,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         compute_rolling_volatility(stocks, 22)
 
     elif user_request == 8:
-        print('Graphing of ARIMA')
-
-
-    elif user_request == 9:
-        print('Graphing of Rolling Volatility')
+        print('Graphing of GJR-GARCH Models')
 
 
     else:
@@ -134,6 +130,6 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         user_request = input("Enter valid number: ")
         user_request = int(user_request)
 
-    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables
+    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe
 
 switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, all_variables)
