@@ -5,7 +5,7 @@
 # Importing everything necessary
 import os
 import sys
-from graph_operations import plot_prices, plot_returns, plot_abnormal_returns, plot_specific_volatility
+from graph_operations import plot_prices, plot_returns, plot_abnormal_returns, plot_specific_volatility, plot_garch_prediction, plot_combined_prediction
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
@@ -27,10 +27,11 @@ abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Da
 cumulative_abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'cumu_abnormal_rets_complete.csv'))
 extended_dataframe = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rescaled_dataframe_all_vars.csv'))
 rolling_volatility_calculated = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rolling_volatility_calcs.csv'))
+volatility_values = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'volatility_garch_results.csv'))
 print("-------------------------------------------------")
 
 
-def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, extended_dataframe):
+def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, extended_dataframe, rolling_volatility_calculated, volatility_values):
 
     # Combining every variable into one dataframe for simplicity (if obtained)
     all_variables = dummy_vars
@@ -114,10 +115,10 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         # Actually doing the ARMA-GJR-GARCH modeling, passing in the entire dataframe, and averaged stocks ARMA values
         # This code also generates the entire variables file to be a holistic dataframe for all variables
         print(f'Performing GJR-GARCH Test with the stocks fitted to ARMA({stocks_fit[0]},{stocks_fit[1]}).')
-        extended_dataframe = garch_test(all_variables, stocks_fit[0], stocks_fit[1]) # return variable is a modified dataframe of all the variables, with columns with returns*100
+        extended_dataframe, volatility_values = garch_test(all_variables, stocks_fit[0], stocks_fit[1]) # return variable is a modified dataframe of all the variables, with columns with returns*100
 
         # Graphing the garch results
-
+        plot_garch_prediction(volatility_values)
 
     elif user_request == 7:
         print('Rolling Volatility Calculations')
@@ -126,9 +127,13 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         rolling_volatility_calculated = compute_rolling_volatility(stocks, 21) # plotting included in this function for the overall volatility
 
         # Volatility plots (2 month time period of trading days) for specific events
-        plot_specific_volatility(rolling_volatility_calculated, sig_dates)
+        #plot_specific_volatility(rolling_volatility_calculated, sig_dates)
 
-    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated
+        # Graphing a combined plot with the garch results and the rolling volatility
+        plot_combined_prediction(volatility_values, rolling_volatility_calculated)
+
+
+    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated, volatility_values
 
 #########################################################################################################################
 # Asking the user what they specifically want to see or calculate
@@ -165,5 +170,5 @@ while loop_program == True:
             print("Incorrect input, please input a valid number.")
             enter_switch = False
 
-    # Running the switch statement to start the program
-    stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated = switch(user_request_int, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, extended_dataframe)
+    # Running the switch statement to start the program (VARIABLES NEED TO BE FIXED!!!)
+    stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated, volatility_values = switch(user_request_int, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, extended_dataframe, rolling_volatility_calculated, volatility_values)

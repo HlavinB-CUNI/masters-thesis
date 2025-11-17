@@ -11,6 +11,7 @@ from matplotlib import pyplot
 from arch import arch_model
 from file_operations import file_existence_check, export_values_to_csv
 import os
+from graph_operations import plot_garch_prediction
 
 
 def plot_acf_pacf(stocks, string_name):
@@ -113,12 +114,23 @@ def garch_test(combined_df, ar_value, ma_value):
         dist='t',        # Student's t for fat tails
         mean='ARX')      # Autoregressive model
     
-    # fitting the model
-    res = model.fit(update_freq=10, disp='off')
-    print(res.summary())
+    # Fitting the model
+    results = model.fit(update_freq=10, disp='off')
+    print(results.summary())
+
+    df_dates = pd.DataFrame(data = combined_df['Date'].to_pandas()).reset_index(drop = True)
+    df_vol = pd.DataFrame(data = results.conditional_volatility).reset_index(drop = True)
+
+    # Assembling dataframe for the volatility values generated
+    df_vol = pd.concat([df_dates, df_vol], axis = 1)
+    df_vol.rename(columns = {0:'Volatility'}, inplace = True)
 
     # Establishing the directory path for all files for this project
     script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Exporting volatility values to .csv
+    file_existence_check(f"{script_dir}\Data\volatility_garch_results.csv")
+    export_values_to_csv('volatility_garch_results.csv', pl.from_pandas(df_vol))
 
     # Exporting the new scaled data to .csv 
     file_existence_check(f"{script_dir}\Data\rescaled_dataframe_all_vars.csv")
@@ -126,4 +138,4 @@ def garch_test(combined_df, ar_value, ma_value):
 
     # Things that need to be re-scaled back to normal = mean coefficients, varience forecasts/omega 
     
-    return combined_df
+    return combined_df, pl.from_pandas(df_vol)
