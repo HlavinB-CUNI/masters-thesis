@@ -5,7 +5,7 @@
 # Importing everything necessary
 import os
 import sys
-from graph_operations import plot_prices, plot_returns, plot_abnormal_returns
+from graph_operations import plot_prices, plot_returns, plot_abnormal_returns, plot_specific_volatility
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
@@ -116,11 +116,17 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         print(f'Performing GJR-GARCH Test with the stocks fitted to ARMA({stocks_fit[0]},{stocks_fit[1]}).')
         extended_dataframe = garch_test(all_variables, stocks_fit[0], stocks_fit[1]) # return variable is a modified dataframe of all the variables, with columns with returns*100
 
+        # Graphing the garch results
+
+
     elif user_request == 7:
         print('Rolling Volatility Calculations')
 
         # Calculating the rolling volatility under a month window time frame for the averaged oil stock returns
-        rolling_volatility_calculated = compute_rolling_volatility(stocks, 22)
+        rolling_volatility_calculated = compute_rolling_volatility(stocks, 22) # plotting included in this function for the overall volatility
+
+        # Volatility plots (2 month time period of trading days) for specific events
+        plot_specific_volatility(rolling_volatility_calculated, sig_dates)
 
     return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated
 

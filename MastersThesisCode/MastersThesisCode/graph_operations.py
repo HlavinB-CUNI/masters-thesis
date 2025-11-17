@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import pandas as pd
+
 
 def plot_prices(dataframe):
     dataframe = dataframe.to_pandas()
@@ -72,3 +74,32 @@ def plot_rolling_volatility(dataframe):
         plt.axhline(0.10, color='k', linewidth = 1, alpha = .15)
 
         plt.show()
+
+def plot_specific_volatility(dataframe, dates):
+
+    print(dataframe)
+    print(dates)
+
+    for i in range(len(dataframe)):
+        for j in range (len(dates)):
+            if dataframe.iloc[i,0] == dates[j, 1]:
+                print(f'Match found at: {dates[j, 1]}')
+
+                plotting_df = {'date': dataframe.iloc[i-22:i+23,0].to_list(), 
+                               'roll_vol': dataframe.iloc[i-22:i+23,2].to_list()}
+                plotting_df = pd.DataFrame(data = plotting_df)
+
+                plt.plot(plotting_df['date'], plotting_df['roll_vol'], color = "blue")
+
+                plt.suptitle(f"Plot of Date vs. Volatility for {dates[j, 1]} and +/- One Month of Trading Days ")
+                plt.title(f"Event Classification: {dates[j, 2]}")
+                
+                plt.xlabel("Date")
+                plt.xticks(rotation = 60)
+                plt.ylabel("Volatility")
+                
+                plt.grid(color='k', linestyle='-', linewidth=1, alpha = 0.15)
+                plt.axhline(0, color='k', linewidth = 1, alpha = 1)
+                plt.axvline(plotting_df.iloc[22, 0], color='goldenrod', linewidth = 1, alpha = 1)
+                
+                plt.show()
