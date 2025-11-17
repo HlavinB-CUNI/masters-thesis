@@ -1,9 +1,12 @@
 from graph_operations import plot_rolling_volatility
+from file_operations import file_existence_check, export_values_to_csv
+import polars as pl
+import os
 
 
 def compute_rolling_volatility(stock_rets, days):
 
-    # Need to convert to xts
+    # Need to convert to pandas for calculations
     df = stock_rets.to_pandas()
 
     # Adding in the rolling volatility for a month's worth of trading days
@@ -11,5 +14,12 @@ def compute_rolling_volatility(stock_rets, days):
 
     # Plotting the rolling volatility
     plot_rolling_volatility(df)
+
+    # Establishing the directory path for all files for this project
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Exporting the new scaled data to .csv 
+    file_existence_check(f"{script_dir}\Data\rolling_volatility_calcs.csv")
+    export_values_to_csv('rolling_volatility_calcs.csv', pl.from_pandas(df))
     
-    return 
+    return df

@@ -2,8 +2,9 @@
 # Topic: Do Russian Aggressions Significnatly Impact US Oil Stocks?
 # Made by Bryan Hlavin - Supervisor: Prof. Evzen Kocenda
 
+# Importing everything necessary
 import os
-import polars as pl
+import sys
 from graph_operations import plot_prices, plot_returns, plot_abnormal_returns
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
@@ -24,21 +25,26 @@ dummy_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dumm
 significant_dates = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'dummy_events.csv'))
 abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'abnormal_rets_complete.csv'))
 cumulative_abnormal_returns_complete = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'cumu_abnormal_rets_complete.csv'))
-all_variables = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rescaled_dataframe_all_vars.csv'))
+extended_dataframe = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rescaled_dataframe_all_vars.csv'))
+rolling_volatility_calculated = file_to_dataframe_check(os.path.join(script_dir, 'Data', 'rolling_volatility_calcs.csv'))
 print("-------------------------------------------------")
 
-# Asking the user what they specifically want to see or calculate
-print('Please select a number for what action you would like to perform.')
-user_request = int(input("Enter valid number: "))
 
-def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, all_variables):
+def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, extended_dataframe):
+
+    # Combining every variable into one dataframe for simplicity (if obtained)
+    all_variables = dummy_vars
+    all_variables = all_variables.with_columns(stocks[:,1])
+    all_variables = all_variables.with_columns(SP500[:,2])
+    all_variables = all_variables.with_columns(oil[:,2])
+    
     if user_request == 1:
-        print('Dataframe Generation of all Oil and Gas Stocks')
+        print('Dataframe Generation of all Oil and Gas Stocks Returns')
         stocks = acquire_stock_data(path)
         check_stationarity_stocks(stocks)
     
     elif user_request == 2:
-        print('Dataframe Generation of Crude Oil Price')
+        print('Dataframe Generation of Crude Oil Prices & Returns')
         oil = acquire_general_data("CL=F", stocks)
         check_stationarity_general(oil, "CL=F")
 
@@ -48,7 +54,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         check_stationarity_general(SP500, "^SPX")
 
     elif user_request == 4:
-        print('Generalized Graphing Operations')
+        print('Graphing of Stocks & Returns')
         
         # Options for stock graph and returns graph
         print('Please select a number for what action you would like to perform.')
@@ -92,13 +98,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
             pass
 
     elif user_request == 6:
-        print('ARMA-GARCH Calculations')
-
-        # Combining every variable into one dataframe for simplicity
-        all_variables = dummy_vars
-        all_variables = all_variables.with_columns(stocks[:,1])
-        all_variables = all_variables.with_columns(SP500[:,2])
-        all_variables = all_variables.with_columns(oil[:,2])
+        print('ARMA-GARCH Calculations and Graphing')
 
         # fitting all the values 
         plot_acf_pacf(stocks, 'Averaged Stocks')
@@ -112,6 +112,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         # arimax_stocks_fit = arimax_fit(all_variables, stocks_fit)
 
         # Actually doing the ARMA-GJR-GARCH modeling, passing in the entire dataframe, and averaged stocks ARMA values
+        # This code also generates the entire variables file to be a holistic dataframe for all variables
         print(f'Performing GJR-GARCH Test with the stocks fitted to ARMA({stocks_fit[0]},{stocks_fit[1]}).')
         extended_dataframe = garch_test(all_variables, stocks_fit[0], stocks_fit[1]) # return variable is a modified dataframe of all the variables, with columns with returns*100
 
@@ -119,17 +120,44 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         print('Rolling Volatility Calculations')
 
         # Calculating the rolling volatility under a month window time frame for the averaged oil stock returns
-        compute_rolling_volatility(stocks, 22)
+        rolling_volatility_calculated = compute_rolling_volatility(stocks, 22)
 
-    elif user_request == 8:
-        print('Graphing of GJR-GARCH Models')
+    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated
 
+#########################################################################################################################
+# Asking the user what they specifically want to see or calculate
+print('Please select the corresponding number for what action you would like to perform.')
+print('Options:' +
+     '\n' + '1) Dataframe Generation of all Oil and Gas Stocks Returns' +
+     '\n' + '2) Dataframe Generation of Crude Oil Prices & Returns'
+     '\n' + '3) Dataframe Generation of S&P 500 Prices & Returns'
+     '\n' + '4) Graphing of Stocks and Returns'
+     '\n' + '5) Abnormal Returns Calculations and Graphing'
+     '\n' + '6) ARMA-GJR-GARCH Operations and Graphing'
+     '\n' + '7) Rolling Volatility Calculations'
+     '\n' + '8) Exit Application')
 
-    else:
-        print("You have not imputted a valid number. Please try again. ")
-        user_request = input("Enter valid number: ")
-        user_request = int(user_request)
+# Loop if the user wants to do more than one thing while the process is running
+loop_program = True
+user_request_int = 0
+while loop_program == True:
 
-    return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe
+    # Loop to ensure that a valid number is selected, and it will not continue until it is. 
+    enter_switch = False
+    while enter_switch == False:
 
-switch(user_request, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, all_variables)
+        # Asking the user to input a valid number
+        user_request = str(input("Enter valid number: "))
+        if user_request in ['1','2','3','4','5','6','7']:
+            print(f"You have selected number {user_request}.")
+            user_request_int = int(user_request)
+            enter_switch = True
+        elif user_request in ['8']:
+            print("Ending process.")
+            sys.exit()
+        else:
+            print("Incorrect input, please input a valid number.")
+            enter_switch = False
+
+    # Running the switch statement to start the program
+    stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated = switch(user_request_int, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, extended_dataframe)
