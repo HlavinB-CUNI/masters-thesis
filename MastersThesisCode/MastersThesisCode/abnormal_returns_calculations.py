@@ -1,5 +1,4 @@
 ﻿import polars as pl
-import polars_ols as pols
 import os
 import math
 import scipy.stats as st

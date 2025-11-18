@@ -5,13 +5,11 @@ from statsforecast.core import _StatsForecast
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsforecast import StatsForecast
 from statsforecast.models import AutoARIMA
-from statsforecast.arima import arima_string
 import statsmodels.api as sm_api
 from matplotlib import pyplot
 from arch import arch_model
 from file_operations import file_existence_check, export_values_to_csv
 import os
-from graph_operations import plot_garch_prediction
 
 
 def plot_acf_pacf(stocks, string_name):
@@ -126,9 +124,6 @@ def garch_test(combined_df, ar_value, ma_value):
     df_vol.rename(columns = {0:'Volatility'}, inplace = True)
     df_vol['True_Volatility'] = df_vol['Volatility'] / 100 # Need to move scale back to default by dividing by 100
 
-    # Rescaling and assembling a dataframe for the mean coefficients goes here!
-
-
     # Establishing the directory path for all files for this project
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -141,4 +136,4 @@ def garch_test(combined_df, ar_value, ma_value):
     export_values_to_csv('rescaled_dataframe_all_vars.csv', combined_df)
 
     
-    return combined_df, pl.from_pandas(df_vol)
+    return results, combined_df, pl.from_pandas(df_vol)
