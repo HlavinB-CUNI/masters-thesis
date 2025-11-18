@@ -127,7 +127,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         rolling_volatility_calculated = compute_rolling_volatility(stocks, 21) # plotting included in this function for the overall volatility
 
         # Volatility plots (2 month time period of trading days) for specific events
-        #plot_specific_volatility(rolling_volatility_calculated, sig_dates)
+        plot_specific_volatility(rolling_volatility_calculated, sig_dates)
 
         # Graphing a combined plot with the garch results and the rolling volatility
         plot_combined_prediction(volatility_values, rolling_volatility_calculated)

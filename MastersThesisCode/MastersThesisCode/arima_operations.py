@@ -124,6 +124,10 @@ def garch_test(combined_df, ar_value, ma_value):
     # Assembling dataframe for the volatility values generated
     df_vol = pd.concat([df_dates, df_vol], axis = 1)
     df_vol.rename(columns = {0:'Volatility'}, inplace = True)
+    df_vol['True_Volatility'] = df_vol['Volatility'] / 100 # Need to move scale back to default by dividing by 100
+
+    # Rescaling and assembling a dataframe for the mean coefficients goes here!
+
 
     # Establishing the directory path for all files for this project
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -136,6 +140,5 @@ def garch_test(combined_df, ar_value, ma_value):
     file_existence_check(f"{script_dir}\Data\rescaled_dataframe_all_vars.csv")
     export_values_to_csv('rescaled_dataframe_all_vars.csv', combined_df)
 
-    # Things that need to be re-scaled back to normal = mean coefficients, varience forecasts/omega 
     
     return combined_df, pl.from_pandas(df_vol)
