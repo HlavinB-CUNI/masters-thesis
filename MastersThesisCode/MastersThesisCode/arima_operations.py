@@ -73,6 +73,17 @@ def arma_fit(returns_chosen, string_name):
     # Getting and printing the AR, I, and MA terms to be used
     final_fit = sf.fitted_[0,0].model_
 
+    arma_23 = sm_api.tsa.arima.ARIMA(df["y"], order = (2,0,3)).fit()
+
+    ljung_box_try5 = sm_api.stats.acorr_ljungbox(arma_23.resid, lags=[5], return_df=True)
+    ljung_box_try10 = sm_api.stats.acorr_ljungbox(arma_23.resid, lags=[10], return_df=True)
+    ljung_box_try15 = sm_api.stats.acorr_ljungbox(arma_23.resid, lags=[15], return_df=True)
+    ljung_box_try20 = sm_api.stats.acorr_ljungbox(arma_23.resid, lags=[20], return_df=True)
+    print(ljung_box_try5)
+    print(ljung_box_try10)
+    print(ljung_box_try15)
+    print(ljung_box_try20)
+
     # Return the end results - averaged stocks = ARMA(0,0), SP500 = ARMA(2,2), and oil = ARMA(2,3)
     return final_fit['arma']
 

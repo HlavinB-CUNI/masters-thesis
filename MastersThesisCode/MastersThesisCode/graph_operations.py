@@ -123,10 +123,11 @@ def plot_combined_prediction(garch_y_vals, roll_vol):
 
     garch_y_vals = garch_y_vals.to_pandas()
 
-    plt.plot(garch_y_vals['Date'], garch_y_vals['True_Volatility'], color = "pink")
+    plt.plot(garch_y_vals['Date'], garch_y_vals['True_Volatility'], color = "red")
     plt.plot(garch_y_vals['Date'], roll_vol['_RollingVol'], color = "blue")
     plt.plot()
     plt.suptitle(f"Plot of Date vs. GJR-GARCH Volatility Estimations")
+    plt.legend(['GJR-GARCH Estimate', 'Rolling Window Estimate'], loc = "upper left") 
     
     plt.xlabel("Date")
     plt.xticks([125, 377, 629, 881, 1133, 1384, 1635, 1887, 2140, 2392, 2643, 2893], 

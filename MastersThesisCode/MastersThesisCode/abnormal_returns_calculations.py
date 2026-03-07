@@ -1,4 +1,5 @@
 ﻿import polars as pl
+import polars_ols
 import os
 import math
 import scipy.stats as st
@@ -17,6 +18,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
     stocks_ols = (df_stocks_sp500.select(
     pl.col("_Mean-Oil-Stocks").least_squares.ols(pl.col("Diff_^SPX"), mode="statistics", add_intercept=True))
     .unnest("statistics").explode(["feature_names", "coefficients", "standard_errors", "t_values", "p_values"]))
+    print(stocks_ols)
 
     # Loop to find each specific date string in the larger dataframes
     for i in range(len(stocks)):
@@ -91,7 +93,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
 
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
 
-
+### NEED TO WORK ON THIS!
 def generalized_sign_test(ab_rets, stocks):
     w = 0
     N = 11
@@ -115,8 +117,12 @@ def generalized_sign_test(ab_rets, stocks):
             date_event.append(ab_rets[5,l-1]) # getting the position of the event date 
             type_event.append(ab_rets[0,l+1]) # getting the position of the event name
 
+    print("w_vars")
+    print(w_variables)
+
     # will be calculated as percentage of positives throughout every observation window combined (this is r_hat)
-    pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
+    #pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
+    pos_pct = sum(w_variables) / ab_rets.count()
 
     # adding all the percentage and z-value calculations
     for n in range(len(w_variables)):
