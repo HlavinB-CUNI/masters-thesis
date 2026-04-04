@@ -93,7 +93,7 @@ def abnormal_returns_calc(stocks, SP500, dates):
 
     return abnormal_returns_complete, cumulative_abnormal_returns_complete
 
-### NEED TO WORK ON THIS!
+### NEED TO WORK ON THIS! NEED TO MAKE ESTIMATION WINDOWS FOR EACH THING, DO A TIME PERIOD FROM 2012 TO 2013 TO GAUGE NORMALITY
 def generalized_sign_test(ab_rets, stocks):
     w = 0
     N = 11
@@ -118,11 +118,23 @@ def generalized_sign_test(ab_rets, stocks):
             type_event.append(ab_rets[0,l+1]) # getting the position of the event name
 
     print("w_vars")
-    print(w_variables)
+    #print(w_variables)
+    #print(ab_rets)
+    #print(f"COUNT {ab_rets.count()}")
+    #print(f"LEN {len(ab_rets)}")
+
+    # Getting the time period from 2.7.2012 to 2.7.2013
+    stocks_first251 = stocks.head(100)
+    
+    w_sampleperiod = 0
+    for m in range(stocks_first251.height):
+        if stocks_first251[m,1] >= 0:
+            w_sampleperiod = w_sampleperiod + 1
 
     # will be calculated as percentage of positives throughout every observation window combined (this is r_hat)
     #pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
-    pos_pct = sum(w_variables) / ab_rets.count()
+    #pos_pct = sum(w_variables) / w_sampleperiod
+    pos_pct = w_sampleperiod / 100
 
     # adding all the percentage and z-value calculations
     for n in range(len(w_variables)):
@@ -151,6 +163,81 @@ def generalized_sign_test(ab_rets, stocks):
     # Exporting the new .csv files
     export_values_to_csv('z_values_df.csv', z_values_df)
     
-    print(z_values_df)
+    with pl.Config(tbl_rows=-1):
+        print(z_values_df)
+
+    return
+
+
+# LIKELY CAN BE DELETED ENTIRELY
+def generalized_sign_test_alternate(ab_rets_alternate, stocks):
+    w = 0
+    N = 11
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    ab_rets_alternate = ab_rets_alternate.drop(ab_rets_alternate.columns[45:51])
+
+    export_values_to_csv('test_cols_alt_thing.csv', ab_rets_alternate)
+
+    w_variables = []
+    z_values = []
+    date_event = []
+    type_event = []
+    p_values = []
+    significant_status = []
+
+    # calculating the quantity of positive returns in each set of abnormal returns
+    for l in range(ab_rets_alternate.width):
+        w = 0
+        if l in [1,4,7,10,13,16,19,22,25,28,31,34,37,40,43,46,49,52,55]:
+            for m in range(ab_rets_alternate.height):
+                if ab_rets_alternate[m,l] >= 0:
+                    w = w + 1
+            w_variables.append(w)
+            date_event.append(ab_rets_alternate[5,l-1]) # getting the position of the event date 
+            type_event.append(ab_rets_alternate[0,l+1]) # getting the position of the event name
+
+    # Getting the time period from 2.7.2012 to 2.7.2013
+    stocks_first251 = stocks.head(100)
+
+    w_sampleperiod = 0
+    for m in range(stocks_first251.height):
+        if stocks_first251[m,1] >= 0:
+            w_sampleperiod = w_sampleperiod + 1
+
+    # will be calculated as percentage of positives throughout every observation window combined (this is r_hat)
+    #pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
+    #pos_pct = sum(w_variables) / w_sampleperiod
+    pos_pct = w_sampleperiod / 100
+
+    # adding all the percentage and z-value calculations
+    for n in range(len(w_variables)):
+        z_values.append((w_variables[n] - (N*pos_pct)) / math.sqrt(N*pos_pct*(1-pos_pct)))
+
+        # test for significance with the p-value
+        p_values.append(2*st.norm.sf(abs(z_values[n])))
+        if (p_values[n] > 0.05): # reminder that this alpha level can be changed only internally
+            significant_status.append('NOT SIGNIFICANT')
+        else:
+            significant_status.append('SIGNIFICANT')
+
+    date_event_df = pl.DataFrame(date_event).rename({"column_0":"Date"})
+    type_event_df = pl.DataFrame(type_event).rename({"column_0":"Event_Type"})
+    w_variables_df = pl.DataFrame(w_variables).rename({"column_0":"w"})
+    z_values_df_2 = pl.DataFrame(z_values).rename({"column_0":"z_value"})
+    p_values_df = pl.DataFrame(p_values).rename({"column_0":"p_value"})
+    significant_status_df = pl.DataFrame(significant_status).rename({"column_0":"Test_For_Significance"})
+
+    # Combining into own dataframe
+    z_values_df_2 = pl.concat([date_event_df, w_variables_df, z_values_df_2, p_values_df, significant_status_df, type_event_df], how = "horizontal")
+
+    # Output to file
+    file_existence_check(f"{script_dir}\Data\z_values_df_2.csv")
+
+    # Exporting the new .csv files
+    export_values_to_csv('z_values_df_2.csv', z_values_df_2)
+    
+    with pl.Config(tbl_rows=-1):
+        print(z_values_df_2)
 
     return
