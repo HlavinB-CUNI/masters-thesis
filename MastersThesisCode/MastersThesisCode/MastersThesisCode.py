@@ -127,13 +127,11 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         # Graphing the resulting GJR-GARCH volatility plots from each event
         plot_specific_volatility_garch(volatility_values, sig_dates)
 
-        # Volatility plots (2 month time period of trading days) for specific events
-        plot_specific_volatility(rolling_volatility_calculated, sig_dates)
+        # Volatility plots (2 month time period of trading days) for specific events (rolling)
+        #plot_specific_volatility(rolling_volatility_calculated, sig_dates)
 
         # Graphing a combined plot with the garch results and the rolling volatility
         plot_combined_prediction(volatility_values, rolling_volatility_calculated)
-
-
 
     return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated, volatility_values
 

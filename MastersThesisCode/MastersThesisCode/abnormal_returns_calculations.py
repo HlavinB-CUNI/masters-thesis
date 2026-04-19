@@ -209,6 +209,7 @@ def generalized_sign_test_alternate(ab_rets_alternate, stocks):
     #pos_pct = sum(w_variables) / ((ab_rets.width / 3)*11)
     #pos_pct = sum(w_variables) / w_sampleperiod
     pos_pct = w_sampleperiod / 100
+    print(f"P-VALUE: {pos_pct}")
 
     # adding all the percentage and z-value calculations
     for n in range(len(w_variables)):

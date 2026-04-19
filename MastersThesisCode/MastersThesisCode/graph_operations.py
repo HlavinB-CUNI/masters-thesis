@@ -80,6 +80,8 @@ def plot_rolling_volatility(dataframe):
 
 def plot_specific_volatility(dataframe, dates):
 
+    print("Rolling Volatility Resutls (Annualized)")
+
     for i in range(len(dataframe)):
         for j in range (len(dates)):
             if dataframe.iloc[i,0] == dates[j, 1]:
@@ -90,7 +92,7 @@ def plot_specific_volatility(dataframe, dates):
                                'roll_vol': dataframe.iloc[i-21:i+22,2].to_list()}
                 plotting_df = pd.DataFrame(data = plotting_df)
 
-                plt.plot(plotting_df['date'], plotting_df['roll_vol'], color = "blue")
+                plt.plot(plotting_df['date'], plotting_df['roll_vol']*sqrt(252), color = "blue")
 
                 plt.suptitle(f"Plot of Date vs. Volatility for {dates[j, 1]} and +/- One Month of Trading Days ")
                 plt.title(f"Event Classification: {dates[j, 2]}")
@@ -107,6 +109,7 @@ def plot_specific_volatility(dataframe, dates):
 
 def plot_specific_volatility_garch(dataframe, dates):
 
+    print("GARCH Volatility Resutls (Annualized)")
     dataframe = dataframe.to_pandas()
 
     for i in range(len(dataframe)):
@@ -116,10 +119,10 @@ def plot_specific_volatility_garch(dataframe, dates):
 
                 # Gathering the month of trading days before and month after
                 plotting_df = {'date': dataframe.iloc[i-21:i+22,0].to_list(), 
-                               'roll_vol': dataframe.iloc[i-21:i+22,2].to_list()}
+                               'garch_vol': dataframe.iloc[i-21:i+22,2].to_list()}
                 plotting_df = pd.DataFrame(data = plotting_df)
 
-                plt.plot(plotting_df['date'], plotting_df['roll_vol'], color = "blue")
+                plt.plot(plotting_df['date'], plotting_df['garch_vol']*sqrt(252), color = "blue")
 
                 plt.suptitle(f"Plot of Date vs. Volatility for {dates[j, 1]} and +/- One Month of Trading Days ")
                 plt.title(f"Event Classification: {dates[j, 2]}")
@@ -134,10 +137,10 @@ def plot_specific_volatility_garch(dataframe, dates):
                 
                 plt.show()
 
+
 def plot_garch_prediction(garch_y_vals):
 
     # Regular Volatility
-
     garch_y_pandas = garch_y_vals.to_pandas()
 
     plt.plot(garch_y_pandas['Date'], garch_y_pandas['True_Volatility'], color = "red")
@@ -154,7 +157,6 @@ def plot_garch_prediction(garch_y_vals):
     plt.show()
 
     # Annualized Volatility
-    
     garch_y_pandas2 = garch_y_pandas
     garch_y_pandas2['True_Volatility'] = garch_y_pandas2['True_Volatility']*sqrt(252)
 
