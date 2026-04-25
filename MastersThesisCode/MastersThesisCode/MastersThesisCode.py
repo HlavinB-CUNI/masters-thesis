@@ -9,7 +9,7 @@ from graph_operations import plot_prices, plot_returns, plot_abnormal_returns, p
 from file_operations import file_to_dataframe_check
 from acquire_stock_data_func import acquire_stock_data, check_stationarity_stocks
 from acquire_general_data_func import acquire_general_data, check_stationarity_general
-from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test, generalized_sign_test_alternate
+from abnormal_returns_calculations import abnormal_returns_calc, generalized_sign_test
 from arima_operations import arma_fit, plot_acf_pacf, garch_test
 from volatility_calculations import compute_rolling_volatility
 
@@ -33,7 +33,7 @@ print("-------------------------------------------------")
 
 def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum_ab_rets, extended_dataframe, rolling_volatility_calculated, volatility_values):
 
-    # Combining every variable into one dataframe for simplicity (if obtained)
+    # Combining every variable into one dataframe for simplicity (if obtained from file read-in)
     all_variables = dummy_vars
     all_variables = all_variables.with_columns(stocks[:,1])
     all_variables = all_variables.with_columns(SP500[:,2])
@@ -95,7 +95,6 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
         user_request_tests = input(f"Enter answer: ")
         if user_request_tests.lower() == "yes" or user_request_tests.lower() == "y":
             generalized_sign_test(ab_rets, stocks)
-            generalized_sign_test_alternate(ab_rets, stocks)
         elif user_request_tests.lower() == "no" or user_request_tests.lower() == "n":
             pass
 
@@ -135,7 +134,7 @@ def switch(user_request, stocks, oil, SP500, dummy_vars, sig_dates, ab_rets, cum
 
     return stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated, volatility_values
 
-#########################################################################################################################
+
 # Asking the user what they specifically want to see or calculate
 print('Please select the corresponding number for what action you would like to perform.')
 print('Options:' +
@@ -170,5 +169,5 @@ while loop_program == True:
             print("Incorrect input, please input a valid number.")
             enter_switch = False
 
-    # Running the switch statement to start the program (VARIABLES NEED TO BE FIXED!!!)
+    # Running the switch statement to start the program
     stocks, oil, SP500, ab_rets, cum_ab_rets, all_variables, extended_dataframe, rolling_volatility_calculated, volatility_values = switch(user_request_int, stocks, oil, SP500, dummy_variables, significant_dates, abnormal_returns_complete, cumulative_abnormal_returns_complete, extended_dataframe, rolling_volatility_calculated, volatility_values)

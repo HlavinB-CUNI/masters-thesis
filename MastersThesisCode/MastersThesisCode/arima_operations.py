@@ -104,7 +104,6 @@ def arma_fit(returns_chosen, string_name):
 def garch_test(combined_df, ar_value, ma_value):
 
     # NOTE - RESCALING WAS NEEDED FOR THE DEPENDENT VARIABLE SO THE NEW COLUMN IS "return*100", done for other returns as well!
-
     # Re-scaling with new columns
     combined_df = combined_df.with_columns(pl.col('_Mean-Oil-Stocks').mul(100).alias('_Mean-Oil-Stocks*100'))
     combined_df = combined_df.with_columns(pl.col('Diff_^SPX').mul(100).alias('Diff_^SPX*100'))
@@ -198,6 +197,5 @@ def garch_test(combined_df, ar_value, ma_value):
     # Exporting the new scaled data to .csv 
     file_existence_check(f"{script_dir}\Data\rescaled_dataframe_all_vars.csv")
     export_values_to_csv('rescaled_dataframe_all_vars.csv', combined_df)
-
     
     return results, combined_df, pl.from_pandas(df_vol)

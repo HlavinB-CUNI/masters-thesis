@@ -25,7 +25,6 @@ def plot_prices(dataframe):
 
 def plot_returns(dataframe):
     dataframe = dataframe.to_pandas()
-    returns_in_question = dataframe.columns[1].split("_",1)[1]
 
     plt.plot(dataframe.iloc[:,0], dataframe.iloc[:,len(dataframe.columns) - 1], color = "green")
     plt.title(f"Plot of Date vs. Returns for Oil Futures")
@@ -136,7 +135,6 @@ def plot_specific_volatility_garch(dataframe, dates):
                 plt.axvline(plotting_df.iloc[21, 0], color='goldenrod', linewidth = 1, alpha = 1)
                 
                 plt.show()
-
 
 def plot_garch_prediction(garch_y_vals):
 

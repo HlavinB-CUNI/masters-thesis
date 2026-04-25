@@ -29,9 +29,9 @@ def acquire_general_data(stock_ticker, averaged_stocks):
     stock_data = stock_data.select(pl.all().slice(1))
     stock_data = stock_data.with_columns(stock_data[f"Date_{stock_ticker}"].dt.date().alias(f"Date_{stock_ticker}"))
 
-    # Check if the # of rows matches the averaged stocks' number of rows
+    # Check if the # of rows matches the averaged stocks' number of rows, if not, it interpolates the value
     if (averaged_stocks.height != stock_data.height):
-        print("Entering the loop!")
+        print("Needed to interpolate!")
         stock_data = interpolate(averaged_stocks, stock_data, stock_ticker)
 
     # If the stock contains an invalid character, have it replaced with a different one - this is only for the file name
@@ -42,7 +42,7 @@ def acquire_general_data(stock_ticker, averaged_stocks):
 
     print(f"stock ticker mod: {stock_ticker_mod}")
 
-    # Seeing if the concat  and average files exist first, and deletes the existing one
+    # Seeing if the concat and average files exist first, and deletes the existing one
     file_existence_check(f"{script_dir}\Data\{stock_ticker_mod}_returns_data.csv")
 
     # Exporting the new .csv files

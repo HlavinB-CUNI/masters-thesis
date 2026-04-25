@@ -31,7 +31,7 @@ def acquire_stock_data(path):
         # Loop to input each individual stock into the list
         for i in stocks:
             # July 1st, 2012 was a Sunday, so the first return will be on July 2nd, and July 1, 2024 was a Monday, so it will be included
-            yahoo_df = yahoo.download(i, start = "2012-06-29", end = "2024-07-02", progress = False, auto_adjust = True) # RESET TO TRUE
+            yahoo_df = yahoo.download(i, start = "2012-06-29", end = "2024-07-02", progress = False, auto_adjust = True) 
             yahoo_df = yahoo_df.reset_index()
             if yahoo_df.empty == False:
                 stock_data[i] = pl.from_pandas(yahoo_df)
@@ -60,9 +60,6 @@ def acquire_stock_data(path):
                 
         
         stock_close_data = list(stock_close_data.values())
-
-        # OPTIONAL - print output to confirm results
-        #print(stock_close_data)
 
         # Setting up concat dataframes
         stock_close_data_concat = stock_close_data[0]
